@@ -1,28 +1,25 @@
 export default function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ mensaje: "Método no permitido" });
-  }
-
-  const { codigo } = req.body;
-
   const codigos = {
-  "TFTF01": "🔥 10% de regalo",
-  "TFTF02": "🎁 200 fichas extra",
-  "TFTF03": "🚫 Sin premio, suerte la próxima",
-  "TFTF04": "🚫 Sin premio, suerte la próxima",
-  "TFTF05": "🔥 ¡Premio especial 50% extra!"
-
+    "TFTF01": "🔥 10% de regalo",
+    "TFTF02": "🎁 200 fichas extra",
+    "TFTF03": "🚫 Sin premio, suerte la próxima",
+    "TFTF04": "🚫 Sin premio, suerte la próxima",
+    "TFTF05": "🔥 ¡Premio especial 50% extra!"
   };
 
-  if (!codigo) {
-    return res.status(400).json({ mensaje: "Código vacío" });
-  }
+  if (req.method === 'POST') {
+    const { codigo } = req.body;
 
-  const premio = codigos[codigo.toUpperCase()];
+    if (!codigo) {
+      return res.status(400).json({ mensaje: "Código no enviado" });
+    }
 
-  if (premio) {
-    return res.status(200).json({ premio });
+    if (!codigos[codigo]) {
+      return res.status(200).json({ mensaje: "❌ Código inválido. Probá con otro." });
+    }
+
+    return res.status(200).json({ mensaje: "✅ " + codigos[codigo] });
   } else {
-    return res.status(404).json({ mensaje: "Código inválido. Probá con otro." });
+    return res.status(405).json({ mensaje: "Método no permitido" });
   }
 }
