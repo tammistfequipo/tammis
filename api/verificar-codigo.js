@@ -2,9 +2,7 @@ export default function handler(req, res) {
   const codigos = {
     "TFTF01": "🔥 10% de regalo",
     "TFTF02": "🎁 200 fichas extra",
-    "TFTF03": "🚫 Sin premio, suerte la próxima",
-    "TFTF04": "🚫 Sin premio, suerte la próxima",
-    "TFTF05": "🔥 ¡Premio especial 50% extra!"
+    "TFTF03": "🚫 Sin premio, suerte la próxima"
   };
 
   if (req.method === 'POST') {
