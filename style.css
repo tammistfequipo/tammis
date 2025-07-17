@@ -1,0 +1,38 @@
+body {
+  background: url('https://i.imgur.com/5mRChbi.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Arial Black', sans-serif;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px gold;
+  display: inline-block;
+}
+
+input, button {
+  padding: 12px;
+  margin: 10px;
+  border: none;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+input {
+  width: 250px;
+}
+
+button {
+  background: gold;
+  cursor: pointer;
+}
+
+#resultado {
+  margin-top: 20px;
+  font-size: 20px;
+}
