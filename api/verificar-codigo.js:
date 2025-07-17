@@ -6,9 +6,12 @@ export default function handler(req, res) {
   const { codigo } = req.body;
 
   const codigos = {
-    "AB25A": "🎁 Premio: 30% de regalo",
-    "GANADOR10": "🎉 ¡Felicitaciones! Crédito extra de regalo",
-    "PREMIO24H": "🔥 Participás por un premio secreto"
+  "TFTF01": "🔥 10% de regalo",
+  "TFTF02": "🎁 200 fichas extra",
+  "TFTF03": "🚫 Sin premio, suerte la próxima",
+  "TFTF04": "🚫 Sin premio, suerte la próxima",
+  "TFTF05": "🔥 ¡Premio especial 50% extra!"
+
   };
 
   if (!codigo) {
