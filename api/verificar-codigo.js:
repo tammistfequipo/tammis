@@ -1,0 +1,25 @@
+export default function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ mensaje: "Método no permitido" });
+  }
+
+  const { codigo } = req.body;
+
+  const codigos = {
+    "AB25A": "🎁 Premio: 30% de regalo",
+    "GANADOR10": "🎉 ¡Felicitaciones! Crédito extra de regalo",
+    "PREMIO24H": "🔥 Participás por un premio secreto"
+  };
+
+  if (!codigo) {
+    return res.status(400).json({ mensaje: "Código vacío" });
+  }
+
+  const premio = codigos[codigo.toUpperCase()];
+
+  if (premio) {
+    return res.status(200).json({ premio });
+  } else {
+    return res.status(404).json({ mensaje: "Código inválido. Probá con otro." });
+  }
+}
