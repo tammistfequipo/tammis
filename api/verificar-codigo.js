@@ -1,23 +1,21 @@
+import fs from 'fs';
+import path from 'path';
+
 export default function handler(req, res) {
-  const codigos = {
-    "TFTF01": "🔥 10% de regalo",
-    "TFTF02": "🎁 200 fichas extra",
-    "TFTF03": "🚫 Sin premio, suerte la próxima"
-  };
+  if (req.method !== 'POST') {
+    return res.status(405).json({ mensaje: 'Método no permitido' });
+  }
 
-  if (req.method === 'POST') {
-    const { codigo } = req.body;
+  const { codigo } = req.body;
 
-    if (!codigo) {
-      return res.status(400).json({ mensaje: "Código no enviado" });
-    }
+  const filePath = path.join(process.cwd(), 'api', 'codigos.json');
+  const rawData = fs.readFileSync(filePath, 'utf-8');
+  const codigos = JSON.parse(rawData);
 
-    if (!codigos[codigo]) {
-      return res.status(200).json({ mensaje: "❌ Código inválido. Probá con otro." });
-    }
-
-    return res.status(200).json({ mensaje: "✅ " + codigos[codigo] });
+  if (codigos[codigo]) {
+    const mensaje = codigos[codigo];
+    return res.status(200).json({ valido: true, mensaje: "✅ " + mensaje });
   } else {
-    return res.status(405).json({ mensaje: "Método no permitido" });
+    return res.status(200).json({ valido: false, mensaje: "❌ Código inválido. Probá con otro." });
   }
 }
