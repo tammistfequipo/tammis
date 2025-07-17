@@ -1,31 +1,25 @@
 async function tirar() {
-  const codigoIngresado = document.getElementById("codigo").value.trim().toUpperCase();
+  const codigo = document.getElementById("codigo").value.trim().toUpperCase();
   const resultado = document.getElementById("resultado");
 
-  if (!codigoIngresado) {
+  if (!codigo) {
     resultado.style.color = "orange";
     resultado.innerHTML = "⚠️ Ingresá un código.";
     return;
   }
 
   try {
-    const response = await fetch("/api/verificar-codigo.js", {
+    const response = await fetch("/api/verificar-codigo", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ codigo: codigoIngresado })
+      body: JSON.stringify({ codigo }),
     });
 
     const data = await response.json();
-
-    if (response.status === 200) {
-      resultado.style.color = "#00ff00";
-      resultado.innerHTML = "✅ " + (data.premio ? data.premio : data.mensaje);
-    } else {
-      resultado.style.color = "#ffcc00";
-      resultado.innerHTML = "🚫 " + data.mensaje;
-    }
+    resultado.style.color = "#00ff00";
+    resultado.innerHTML = data.mensaje;
   } catch (error) {
     resultado.style.color = "red";
     resultado.innerHTML = "❌ Error al verificar el código.";
