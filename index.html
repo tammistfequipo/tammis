@@ -6,14 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       background: linear-gradient(to bottom, #1b1b1b, #000);
       font-family: 'Orbitron', Arial, sans-serif;
       color: #ffffff;
       text-align: center;
-      padding: 20px 10px;
+      padding: 20px 10px 20px;
     }
+
     .container {
       background-color: rgba(0, 0, 0, 0.85);
       border: 3px solid gold;
@@ -24,6 +31,7 @@
       max-width: 400px;
       box-shadow: 0 0 25px gold;
     }
+
     h1 {
       font-size: 26px;
       margin-bottom: 20px;
@@ -31,6 +39,7 @@
       font-weight: bold;
       text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
     }
+
     input {
       padding: 10px;
       border: none;
@@ -40,6 +49,7 @@
       margin-bottom: 20px;
       box-shadow: 0 0 10px white;
     }
+
     button {
       background-color: yellow;
       border: none;
@@ -51,18 +61,24 @@
       box-shadow: 0 0 15px gold, 0 0 25px orange;
       transition: transform 0.2s ease-in-out;
     }
-    button:hover { transform: scale(1.05); }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
     #resultado {
       margin-top: 20px;
       font-weight: bold;
       font-size: 18px;
     }
+
     .mensaje-final {
       font-size: 14px;
       margin-top: 30px;
       color: #00ffff;
       text-shadow: 0 0 5px #00ffff;
     }
+
     .info-extra {
       margin-top: 20px;
       color: #00eaff;
@@ -70,6 +86,7 @@
       text-shadow: 0 0 2px #00eaff;
       line-height: 1.5;
     }
+
     footer {
       margin-top: 15px;
       font-size: 12px;
@@ -91,11 +108,14 @@
     🎰 ¡Seguí girando! Nuevas chances todos los días 🎰<br>
     🔥 Línea Directa 24hs: 1161164088 🔥
   </div>
+
   <footer>
     © 2025 Línea directa EQUIPO TF
   </footer>
 
   <script>
+    const codigosUsados = JSON.parse(localStorage.getItem("codigosUsados") || "[]");
+
     async function tirar() {
       const codigoIngresado = document.getElementById("codigo").value.trim().toUpperCase();
       const resultado = document.getElementById("resultado");
@@ -106,8 +126,7 @@
         return;
       }
 
-      // Revisar si ya fue usado
-      if (localStorage.getItem("usado_" + codigoIngresado)) {
+      if (codigosUsados.includes(codigoIngresado)) {
         resultado.style.color = "#ffcc00";
         resultado.innerHTML = "🚫 Este código ya fue utilizado.";
         return;
@@ -118,17 +137,17 @@
         const data = await res.json();
 
         if (data.valido) {
+          codigosUsados.push(codigoIngresado);
+          localStorage.setItem("codigosUsados", JSON.stringify(codigosUsados));
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ " + data.mensaje;
-          localStorage.setItem("usado_" + codigoIngresado, "true");
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
         }
-      } catch (error) {
+      } catch (err) {
         resultado.style.color = "red";
         resultado.innerHTML = "⚠️ Error al verificar el código.";
-        console.error(error);
       }
     }
   </script>
