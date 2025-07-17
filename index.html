@@ -1,130 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Línea Directa EQUIPO TF 😎💅🏻</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Línea Directa EQUIPO TF</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
-
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
       padding: 0;
-    }
-
-    body {
-      background: linear-gradient(to bottom, #1b1b1b, #000);
-      font-family: 'Orbitron', Arial, sans-serif;
-      color: #ffffff;
+      background: url('https://i.ibb.co/3yZqg3J/fondo-casino.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial Black', sans-serif;
+      color: #fff;
       text-align: center;
-      padding: 20px 10px 20px;
-    }
-
-    .container {
-      background-color: rgba(0, 0, 0, 0.85);
-      border: 3px solid gold;
-      border-radius: 15px;
-      padding: 25px;
-      margin: 20px auto;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 25px gold;
     }
 
     h1 {
-      font-size: 26px;
-      margin-bottom: 20px;
+      font-size: 2.2em;
+      margin-top: 30px;
       color: gold;
-      font-weight: bold;
-      text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500;
+      text-shadow: 0 0 10px #000;
     }
 
-    input {
+    .contenedor {
+      margin-top: 50px;
+    }
+
+    input[type="text"] {
       padding: 10px;
-      border: none;
-      border-radius: 5px;
-      width: 90%;
       font-size: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px white;
+      border-radius: 8px;
+      border: none;
+      width: 250px;
+      text-align: center;
     }
 
     button {
-      background-color: yellow;
-      border: none;
+      margin-top: 15px;
       padding: 10px 20px;
+      font-size: 18px;
+      background-color: gold;
+      border: none;
       border-radius: 10px;
-      font-size: 16px;
+      color: #000;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 0 15px gold, 0 0 25px orange;
-      transition: transform 0.2s ease-in-out;
+      box-shadow: 0 0 10px #fff;
     }
 
     button:hover {
-      transform: scale(1.05);
+      background-color: #ffcc00;
     }
 
     #resultado {
       margin-top: 20px;
+      font-size: 22px;
       font-weight: bold;
-      font-size: 18px;
-    }
-
-    .mensaje-final {
-      font-size: 14px;
-      margin-top: 30px;
-      color: #00ffff;
-      text-shadow: 0 0 5px #00ffff;
     }
 
     .info-extra {
-      margin-top: 20px;
-      color: #00eaff;
-      font-size: 14px;
-      text-shadow: 0 0 2px #00eaff;
-      line-height: 1.5;
-    }
-
-    footer {
-      margin-top: 15px;
-      font-size: 12px;
-      color: #00eaff;
+      margin-top: 60px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 5px #000;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Línea Directa EQUIPO TF 😎💅🏻</h1>
-    <input type="text" id="codigo" placeholder="Pega tu código aquí" />
-    <br />
-    <button onclick="tirar()">🎰 Tirar la rueda</button>
+
+  <h1>🎰 Línea directa EQUIPO TF 😎💅🏻</h1>
+
+  <div class="contenedor">
+    <input type="text" id="codigo" placeholder="Ingresá tu código">
+    <br>
+    <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
     <div id="resultado"></div>
   </div>
 
-  <div class="mensaje-final">🎲 Jugá en nuestra Línea directa y recibí tus códigos de la suerte 🎲</div>
   <div class="info-extra">
-    
-    🎰 ¡Seguí girando! Nuevas chances todos los días 🎰<br>
-    
-    🔥 Línea Directa 24hs: 1161164088 🔥
-    
-    <br>💎 Premios restantes: <strong>71</strong>
-
-    <div style="margin-top: 1cm; font-size: 28px;">😎💅🏻</div>
+    🔥 Línea Directa 24hs: 1161164088 🔥<br>
+    💎 Premios restantes: <strong>30</strong><br>
+    <div style="margin-top: 2cm; font-size: 28px;">😎💅🏻</div>
   </div>
 
-  <footer>
-    © 2025 Línea directa EQUIPO TF
-  </footer>
-
   <script>
-    const codigosUsados = JSON.parse(localStorage.getItem("codigosUsados") || "[]");
+    // Al cargar la página, mostramos el botón y el campo de texto
+    window.onload = function () {
+      document.getElementById("botonTirar").style.display = "inline-block";
+      document.getElementById("codigo").style.display = "inline-block";
+    };
 
-    async function tirar() {
+    function tirar() {
       const codigoIngresado = document.getElementById("codigo").value.trim().toUpperCase();
       const resultado = document.getElementById("resultado");
+      const boton = document.getElementById("botonTirar");
+      const input = document.getElementById("codigo");
 
       if (!codigoIngresado) {
         resultado.style.color = "orange";
@@ -132,30 +103,34 @@
         return;
       }
 
-      if (codigosUsados.includes(codigoIngresado)) {
-        resultado.style.color = "#ffcc00";
-        resultado.innerHTML = "🚫 Este código ya fue utilizado.";
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/verificar-codigo?codigo=${codigoIngresado}`);
-        const data = await res.json();
-
-        if (data.valido) {
-          codigosUsados.push(codigoIngresado);
-          localStorage.setItem("codigosUsados", JSON.stringify(codigosUsados));
+      fetch('/api/verificar-codigo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codigo: codigoIngresado })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.estado === "usado") {
+          resultado.style.color = "#ffcc00";
+          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
+        } else if (data.estado === "valido") {
+          boton.style.display = "none";
+          input.style.display = "none";
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ " + data.mensaje;
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
         }
-      } catch (err) {
+      })
+      .catch(error => {
+        console.error("Error al verificar el código:", error);
         resultado.style.color = "red";
-        resultado.innerHTML = "⚠️ Error al verificar el código.";
-      }
+        resultado.innerHTML = "❌ Error del servidor. Intentá de nuevo.";
+      });
     }
   </script>
+
 </body>
 </html>
+
