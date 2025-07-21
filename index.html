@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: url("/515564428_122237398736233288_5544457801888650322_n.jpg") no-repeat center center fixed;
+      background: url("/public/fondo-xbet.jpg") no-repeat center center fixed;
       background-size: cover;
       font-family: 'Orbitron', sans-serif;
       color: white;
@@ -76,7 +76,7 @@
 </head>
 <body>
 
-  <h1>LÍNEA DIRECTA XBET 5</h1>
+  <h1>LÍNEA DIRECTA XBET</h1>
 
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
@@ -99,14 +99,6 @@
         return;
       }
 
-      // Verificamos si ya fue usado en este navegador
-      const usados = JSON.parse(localStorage.getItem("codigosUsados") || "[]");
-      if (usados.includes(codigoIngresado)) {
-        resultado.style.color = "#ffcc00";
-        resultado.innerHTML = "🚫 Este código ya fue utilizado.";
-        return;
-      }
-
       fetch('/api/verificar-codigo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -114,15 +106,13 @@
       })
       .then(response => response.json())
       .then(data => {
-        if (data.estado === "valido") {
+        if (data.estado === "usado") {
+          resultado.style.color = "#ffcc00";
+          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
+        } else if (data.estado === "valido") {
           boton.style.display = "none";
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ " + data.mensaje;
-
-          // Guardamos como usado en localStorage
-          usados.push(codigoIngresado);
-          localStorage.setItem("codigosUsados", JSON.stringify(usados));
-
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
