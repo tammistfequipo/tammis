@@ -97,6 +97,8 @@
   </div>
 
   <script>
+    const codigosUsados = JSON.parse(localStorage.getItem("codigosUsados")) || [];
+
     function tirar() {
       const codigoIngresado = document.getElementById("codigo").value.trim();
       const resultado = document.getElementById("resultado");
@@ -105,6 +107,12 @@
       if (!codigoIngresado) {
         resultado.style.color = "orange";
         resultado.innerHTML = "⚠️ Ingresá un código.";
+        return;
+      }
+
+      if (codigosUsados.includes(codigoIngresado)) {
+        resultado.style.color = "#ffcc00";
+        resultado.innerHTML = "🚫 Este código ya fue utilizado.";
         return;
       }
 
@@ -119,6 +127,8 @@
           resultado.style.color = "#ffcc00";
           resultado.innerHTML = "🚫 Este código ya fue utilizado.";
         } else if (data.estado === "valido") {
+          codigosUsados.push(codigoIngresado);
+          localStorage.setItem("codigosUsados", JSON.stringify(codigosUsados));
           boton.style.display = "none";
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ " + data.mensaje;
