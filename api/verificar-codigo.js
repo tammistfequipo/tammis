@@ -9,7 +9,7 @@ export default function handler(req, res) {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  const { codigo } = req.body;
+  const codigo = req.body.codigo;
 
   const codigos = JSON.parse(fs.readFileSync(codigosPath, 'utf8'));
   const usados = JSON.parse(fs.readFileSync(usadosPath, 'utf8'));
