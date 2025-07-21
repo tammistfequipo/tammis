@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Línea Directa Xbet</title>
+  <title>LINEA DIRECTA XBET</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,16 +15,16 @@
       padding: 0;
     }
 
-    img.logo {
-      width: 160px;
-      margin-top: 30px;
-    }
-
     h1 {
       font-size: 32px;
       color: #00ccff;
       text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff;
       margin-top: 20px;
+    }
+
+    #logo {
+      width: 150px;
+      margin-top: 30px;
     }
 
     #contenedor {
@@ -80,15 +80,16 @@
 </head>
 <body>
 
-  <img src="https://tammiseqtf.vercel.app/475003401_122201914850233288_8306173426131964903_n.jpg" alt="Logo" class="logo">
-  <h1>Línea Directa Xbet</h1>
+  <img id="logo" src="/475003401_122201914850233288_8306173426131964903_n.jpg" alt="Logo Xbet" />
+
+  <h1>LINEA DIRECTA XBET</h1>
 
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
     <br/>
     <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
     <div id="resultado"></div>
-    <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
+    <div class="leyenda">🍀 Girá la rueda y proba tu suerte 🍀</div>
     <div id="premios-restantes">Premios restantes: 71</div>
   </div>
 
@@ -126,7 +127,7 @@
       .catch(error => {
         console.error("Error al verificar el código:", error);
         resultado.style.color = "red";
-        resultado.innerHTML = "❌ Código inválido.";
+        resultado.innerHTML = "❌ Codigo invalido.";
       });
     }
   </script>
