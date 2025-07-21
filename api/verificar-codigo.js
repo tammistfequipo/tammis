@@ -9,20 +9,20 @@ export default function handler(req, res) {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
+  const { codigo } = req.body;
+
+  if (!codigo) {
+    return res.status(400).json({ error: "Código faltante" });
+  }
+
   let codigos = {};
   let usados = {};
 
   try {
     codigos = JSON.parse(fs.readFileSync(codigosPath, 'utf8'));
     usados = JSON.parse(fs.readFileSync(usadosPath, 'utf8'));
-  } catch (error) {
-    return res.status(500).json({ error: "No se pudieron leer los archivos." });
-  }
-
-  const { codigo } = req.body;
-
-  if (!codigo) {
-    return res.status(400).json({ error: "Código faltante" });
+  } catch (err) {
+    return res.status(500).json({ error: "Error leyendo los archivos" });
   }
 
   if (usados[codigo]) {
