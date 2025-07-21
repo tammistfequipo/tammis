@@ -81,9 +81,9 @@
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
     <br/>
-    <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
+    <button id="botonTirar" onclick="tirar()">🎰 PULSA</button>
     <div id="resultado"></div>
-    <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
+    <div class="leyenda">🍀 Pulsa el boton y probá tu suerte 🍀</div>
     <div id="premios-restantes">Premios restantes: 71</div>
   </div>
 
@@ -99,6 +99,14 @@
         return;
       }
 
+      // Verificar si ya se usó en este navegador
+      const usados = JSON.parse(localStorage.getItem("codigosUsados") || "{}");
+      if (usados[codigoIngresado]) {
+        resultado.style.color = "#ffcc00";
+        resultado.innerHTML = "🚫 Este código ya fue utilizado.";
+        return;
+      }
+
       fetch('/api/verificar-codigo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -106,13 +114,12 @@
       })
       .then(response => response.json())
       .then(data => {
-        if (data.estado === "usado") {
-          resultado.style.color = "#ffcc00";
-          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
-        } else if (data.estado === "valido") {
-          boton.style.display = "none";
+        if (data.estado === "valido") {
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ " + data.mensaje;
+          boton.style.display = "none";
+          usados[codigoIngresado] = true;
+          localStorage.setItem("codigosUsados", JSON.stringify(usados));
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
