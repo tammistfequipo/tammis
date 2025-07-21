@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const codigosPath = path.join(process.cwd(), 'api', 'codigos.json');
-const usadosPath = path.join(process.cwd(), 'api', 'usados.json');
+const codigosPath = path.resolve('./api/codigos.json');
+const usadosPath = path.resolve('./api/usados.json');
 
 export default function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,29 +10,19 @@ export default function handler(req, res) {
   }
 
   const { codigo } = req.body;
+  const codigoString = String(codigo).trim(); // 👈 asegura que sea string
 
-  if (!codigo) {
-    return res.status(400).json({ error: "Código faltante" });
-  }
+  const codigos = JSON.parse(fs.readFileSync(codigosPath, 'utf8'));
+  const usados = JSON.parse(fs.readFileSync(usadosPath, 'utf8'));
 
-  let codigos = {};
-  let usados = {};
-
-  try {
-    codigos = JSON.parse(fs.readFileSync(codigosPath, 'utf8'));
-    usados = JSON.parse(fs.readFileSync(usadosPath, 'utf8'));
-  } catch (err) {
-    return res.status(500).json({ error: "Error leyendo los archivos" });
-  }
-
-  if (usados[codigo]) {
+  if (usados[codigoString]) {
     return res.json({ estado: "usado" });
   }
 
-  if (codigos[codigo]) {
-    usados[codigo] = true;
+  if (codigos[codigoString]) {
+    usados[codigoString] = true;
     fs.writeFileSync(usadosPath, JSON.stringify(usados, null, 2));
-    return res.json({ estado: "valido", mensaje: codigos[codigo] });
+    return res.json({ estado: "valido", mensaje: codigos[codigoString] });
   }
 
   return res.json({ estado: "invalido" });
