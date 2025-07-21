@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LÍNEA DIRECTA XBET 5</title>
+  <title>LÍNEA DIRECTA XBET</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -67,21 +67,27 @@
       font-size: 16px;
     }
 
-    #premios-animados {
-      margin-top: 30px;
-      font-size: 18px;
-      color: #00ffcc;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid #00ccff;
-      box-shadow: 0 0 8px #000;
+    .notificacion-premio {
+      font-size: 17px;
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00ccff;
+      padding: 10px 20px;
+      border-radius: 15px;
+      margin: 15px auto 0;
+      width: fit-content;
+      animation: aparecer 0.5s ease;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <h1>LÍNEA DIRECTA XBET 5</h1>
+  <h1>LÍNEA DIRECTA XBET</h1>
 
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
@@ -89,15 +95,11 @@
     <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
     <div id="resultado"></div>
     <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
-    <div id="premios-animados">
-      <marquee behavior="scroll" direction="left" scrollamount="6">
-        🎉 Ganaron $10.000 en transferencia – 🎁 3.000 fichas – 💥 30% de regalo – 💰 100 fichas – 🔥 5.000 fichas – 🤑 Carga doble – 🎁 2.000 fichas
-      </marquee>
-    </div>
+    <div id="premios-automaticos"></div>
   </div>
 
   <script>
-    const codigosUsados = JSON.parse(localStorage.getItem("codigosUsados")) || [];
+    const usados = JSON.parse(localStorage.getItem('usados') || '{}');
 
     function tirar() {
       const codigoIngresado = document.getElementById("codigo").value.trim();
@@ -110,7 +112,7 @@
         return;
       }
 
-      if (codigosUsados.includes(codigoIngresado)) {
+      if (usados[codigoIngresado]) {
         resultado.style.color = "#ffcc00";
         resultado.innerHTML = "🚫 Este código ya fue utilizado.";
         return;
@@ -123,15 +125,15 @@
       })
       .then(response => response.json())
       .then(data => {
-        if (data.estado === "usado") {
-          resultado.style.color = "#ffcc00";
-          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
-        } else if (data.estado === "valido") {
-          codigosUsados.push(codigoIngresado);
-          localStorage.setItem("codigosUsados", JSON.stringify(codigosUsados));
+        if (data.estado === "valido") {
           boton.style.display = "none";
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ " + data.mensaje;
+          usados[codigoIngresado] = true;
+          localStorage.setItem("usados", JSON.stringify(usados));
+        } else if (data.estado === "usado") {
+          resultado.style.color = "#ffcc00";
+          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
@@ -143,6 +145,70 @@
         resultado.innerHTML = "❌ Código inválido.";
       });
     }
+
+    // PREMIOS AUTOMÁTICOS
+    const premios = [
+      "RICA****: GANÓ 10K EN TRANSFERENCIA",
+      "MARI****: GANÓ 3K EN FICHAS",
+      "LOCA****: GANÓ 500 FICHAS",
+      "BETO****: GANÓ 2.000 FICHAS",
+      "CAPI****: GANÓ 30% DE REGALO",
+      "XBET****: GANÓ 1.000 FICHAS",
+      "ROLO****: GANÓ 10K EN TRANSFERENCIA",
+      "NANY****: GANÓ 3.000 FICHAS",
+      "PELU****: GANÓ 500 FICHAS",
+      "LUKA****: GANÓ 10% EXTRA",
+      "DANY****: GANÓ 5K EN FICHAS",
+      "LORE****: GANÓ 200 FICHAS",
+      "JULI****: GANÓ 1.000 FICHAS",
+      "MONI****: GANÓ 3K EN TRANSFERENCIA",
+      "TUKI****: GANÓ 3.500 FICHAS",
+      "PICH****: GANÓ 30% EXTRA",
+      "MATE****: GANÓ 100 FICHAS",
+      "NATI****: GANÓ 1.500 FICHAS",
+      "MAGA****: GANÓ 4K EN TRANSFERENCIA",
+      "BELA****: GANÓ 2.000 FICHAS",
+      "ELLA****: GANÓ 3.000 FICHAS",
+      "RAFA****: GANÓ 10K EN FICHAS",
+      "SAMU****: GANÓ 20% EXTRA",
+      "CHIK****: GANÓ 500 FICHAS",
+      "LUNA****: GANÓ 3.000 FICHAS",
+      "ALFA****: GANÓ 7K EN TRANSFERENCIA",
+      "PEPI****: GANÓ 1.200 FICHAS",
+      "FERN****: GANÓ 10% DE REGALO",
+      "VALE****: GANÓ 3K EN FICHAS",
+      "RULO****: GANÓ 5.000 FICHAS",
+      "LUCI****: GANÓ 10K EN TRANSFERENCIA",
+      "TINA****: GANÓ 4K EN FICHAS",
+      "LAUT****: GANÓ 30% EXTRA",
+      "CECI****: GANÓ 3.500 FICHAS",
+      "COCO****: GANÓ 10K EN FICHAS",
+      "NICO****: GANÓ 2.000 FICHAS",
+      "ROSE****: GANÓ 1.000 FICHAS",
+      "PATA****: GANÓ 20% EXTRA",
+      "LELE****: GANÓ 3K EN FICHAS",
+      "MAJO****: GANÓ 500 FICHAS",
+      "LEON****: GANÓ 8K EN TRANSFERENCIA",
+      "DORA****: GANÓ 2.000 FICHAS",
+      "ZAFI****: GANÓ 1.300 FICHAS",
+      "FRAN****: GANÓ 10% EXTRA",
+      "NENA****: GANÓ 4.500 FICHAS",
+      "ISMA****: GANÓ 600 FICHAS",
+      "KIKE****: GANÓ 3K EN FICHAS",
+      "BARB****: GANÓ 5K EN TRANSFERENCIA",
+      "NOEL****: GANÓ 10K EN FICHAS",
+    ];
+
+    const contenedorPremios = document.getElementById("premios-automaticos");
+
+    function mostrarPremio() {
+      const mensaje = premios[Math.floor(Math.random() * premios.length)];
+      contenedorPremios.innerHTML = `<div class="notificacion-premio">${mensaje}</div>`;
+    }
+
+    setInterval(mostrarPremio, 5000);
+    mostrarPremio();
   </script>
+
 </body>
 </html>
