@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LINEA DIRECTA XBET</title>
+  <title>LÍNEA DIRECTA XBET</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #001f3f;
+      background: url("/515564428_122237398736233288_5544457801888650322_n.jpg") no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Orbitron', sans-serif;
       color: white;
       text-align: center;
       margin: 0;
       padding: 0;
+      backdrop-filter: brightness(0.7); /* Oscurece un poco el fondo para mayor contraste */
     }
 
     h1 {
@@ -22,18 +24,13 @@
       margin-top: 20px;
     }
 
-    #logo {
-      width: 150px;
-      margin-top: 30px;
-    }
-
     #contenedor {
       margin: 40px auto;
       max-width: 400px;
       padding: 30px;
       border-radius: 20px;
       border: 3px solid #00ccff;
-      background-color: #001a33;
+      background-color: rgba(0, 26, 51, 0.8);
       box-shadow: 0 0 20px #00ccff;
     }
 
@@ -80,9 +77,10 @@
 </head>
 <body>
 
-  <img id="logo" src="/475003401_122201914850233288_8306173426131964903_n.jpg" alt="Logo Xbet" />
+  <!-- Logo arriba -->
+  <img src="/475003401_122201914850233288_8306173426131964903_n.jpg" alt="Logo XBET" style="width: 150px; margin-top: 20px;" />
 
-  <h1>LINEA DIRECTA XBET</h1>
+  <h1>LÍNEA DIRECTA XBET</h1>
 
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
@@ -127,7 +125,7 @@
       .catch(error => {
         console.error("Error al verificar el código:", error);
         resultado.style.color = "red";
-        resultado.innerHTML = "❌ Codigo invalido.";
+        resultado.innerHTML = "❌ Código inválido.";
       });
     }
   </script>
