@@ -83,21 +83,27 @@
       overflow: hidden;
       white-space: nowrap;
       margin-top: 25px;
-      height: 30px;
+      height: 35px;
+      position: relative;
     }
 
-    .notificacion-premio {
+    .marquesina {
       display: inline-block;
-      padding: 5px 30px;
+      padding-left: 100%;
+      animation: deslizar 30s linear infinite;
+    }
+
+    .premio {
+      display: inline-block;
+      margin-right: 50px;
       font-size: 16px;
       font-weight: bold;
       color: #00ccff;
-      animation: moverPremio 15s linear infinite;
       text-shadow: 0 0 5px #000;
     }
 
-    @keyframes moverPremio {
-      0% { transform: translateX(100%); }
+    @keyframes deslizar {
+      0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
 
@@ -136,8 +142,27 @@
     <br/>
     <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
     <div id="resultado"></div>
-    <div class="leyenda">🍀 Girá la rueda y probá tu suerte </div>
-    <div id="premios-automaticos"><span class="notificacion-premio" id="premioTexto"></span></div>
+    <div class="leyenda">🍀 Girá la rueda y probá tu suerte</div>
+
+    <div id="premios-automaticos">
+      <div class="marquesina">
+        <span class="premio">RODR****: GANÓ 100K EN TRANSFERENCIA</span>
+        <span class="premio">MERI****: GANÓ 3K EN FICHAS</span>
+        <span class="premio">LORE****: GANÓ 500 FICHAS</span>
+        <span class="premio">BETI****: GANÓ 2.000 FICHAS</span>
+        <span class="premio">CORI****: GANÓ 30% DE REGALO</span>
+        <span class="premio">XBET****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">ROBE****: GANÓ 10K EN TRANSFERENCIA</span>
+        <span class="premio">NANC****: GANÓ 3.000 FICHAS</span>
+        <span class="premio">GRIC****: GANÓ 500 FICHAS</span>
+        <span class="premio">LUCI****: GANÓ 10% EXTRA</span>
+        <span class="premio">DAMI****: GANÓ 5K EN FICHAS</span>
+        <span class="premio">LAUT****: GANÓ 200 FICHAS</span>
+        <span class="premio">JUAN****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">MARC****: GANÓ 3K EN TRANSFERENCIA</span>
+      </div>
+    </div>
+
     <button id="botonRecargar" onclick="location.reload()">👉 Presioná acá para colocar el siguiente código</button>
   </div>
 
@@ -198,26 +223,6 @@
         botonRecargar.style.display = "inline-block";
       });
     }
-
-    const premios = [
-      "RODR****: GANÓ 100K EN TRANSFERENCIA", "MERI****: GANÓ 3K EN FICHAS",
-      "LORE****: GANÓ 500 FICHAS", "BETI****: GANÓ 2.000 FICHAS",
-      "CORI****: GANÓ 30% DE REGALO", "XBET****: GANÓ 1.000 FICHAS",
-      "ROBE****: GANÓ 10K EN TRANSFERENCIA", "NANC****: GANÓ 3.000 FICHAS",
-      "GRIC****: GANÓ 500 FICHAS", "LUCI****: GANÓ 10% EXTRA",
-      "DAMI****: GANÓ 5K EN FICHAS", "LAUT****: GANÓ 200 FICHAS",
-      "JUAN****: GANÓ 1.000 FICHAS", "MARC****: GANÓ 3K EN TRANSFERENCIA"
-    ];
-
-    const premioTexto = document.getElementById("premioTexto");
-
-    function mostrarPremio() {
-      const mensaje = premios[Math.floor(Math.random() * premios.length)];
-      premioTexto.innerText = mensaje;
-    }
-
-    setInterval(mostrarPremio, 6000);
-    mostrarPremio();
   </script>
 </body>
 </html>
