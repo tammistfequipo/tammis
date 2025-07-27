@@ -31,12 +31,8 @@
     }
 
     @keyframes latido {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.07);
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
     }
 
     #contenedor {
@@ -61,14 +57,25 @@
 
     button {
       margin-top: 20px;
-      padding: 14px 28px;
+      padding: 20px;
       font-size: 18px;
-      background-color: #00ccff;
+      background-color: #ff0033;
       border: none;
-      color: black;
-      border-radius: 100px;
+      color: white;
+      border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 10px #000, 0 0 20px #000;
+      width: 80px;
+      height: 80px;
+      box-shadow:
+        0 0 5px #ff0033,
+        0 0 10px #ff0033,
+        0 0 15px #ff0033,
+        0 0 20px #ff0033;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
     }
 
     #resultado {
@@ -128,7 +135,7 @@
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
     <br/>
-    <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
+    <button id="botonTirar" onclick="tirar()">🎰</button>
     <div id="resultado"></div>
     <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
     <div id="premios-automaticos"></div>
@@ -198,12 +205,7 @@
       "LURD****: GANÓ 500 FICHAS", "BETO****: GANÓ 2.000 FICHAS",
       "CARL****: GANÓ 30% DE REGALO", "XBET****: GANÓ 1.000 FICHAS",
       "ROBE****: GANÓ 10K EN TRANSFERENCIA", "NANY****: GANÓ 3.000 FICHAS",
-      "GRAC****: GANÓ 500 FICHAS", "LUKA****: GANÓ 10% EXTRA",
-      "DANI****: GANÓ 5K EN FICHAS", "LORE****: GANÓ 200 FICHAS",
-      "JULI****: GANÓ 1.000 FICHAS", "MONI****: GANÓ 3K EN TRANSFERENCIA",
-      "TUKI****: GANÓ 3.500 FICHAS", "PICH****: GANÓ 30% EXTRA",
-      "MATE****: GANÓ 100 FICHAS", "NATI****: GANÓ 1.500 FICHAS",
-      "MAGA****: GANÓ 4K EN TRANSFERENCIA", "BELA****: GANÓ 2.000 FICHAS"
+      "GRAC****: GANÓ 500 FICHAS", "LUKA****: GANÓ 10% EXTRA"
     ];
 
     const contenedorPremios = document.getElementById("premios-automaticos");
