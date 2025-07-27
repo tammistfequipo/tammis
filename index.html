@@ -31,12 +31,8 @@
     }
 
     @keyframes latido {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.07);
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
     }
 
     #contenedor {
@@ -83,21 +79,26 @@
       font-size: 16px;
     }
 
-    .notificacion-premio {
-      font-size: 17px;
-      font-weight: bold;
-      background-color: rgba(0, 0, 0, 0.5);
-      border: 2px solid #00ccff;
-      padding: 10px 20px;
-      border-radius: 15px;
-      margin: 15px auto 0;
-      width: fit-content;
-      animation: aparecer 0.5s ease;
+    #premios-automaticos {
+      overflow: hidden;
+      white-space: nowrap;
+      margin-top: 25px;
+      height: 30px;
     }
 
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .notificacion-premio {
+      display: inline-block;
+      padding: 5px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #00ccff;
+      animation: moverPremio 15s linear infinite;
+      text-shadow: 0 0 5px #000;
+    }
+
+    @keyframes moverPremio {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
 
     .mensaje-extra {
@@ -119,6 +120,11 @@
       display: none;
       animation: aparecer 0.4s ease;
     }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -131,7 +137,7 @@
     <button id="botonTirar" onclick="tirar()">🎰 Tirar la rueda</button>
     <div id="resultado"></div>
     <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
-    <div id="premios-automaticos"></div>
+    <div id="premios-automaticos"><span class="notificacion-premio" id="premioTexto"></span></div>
     <button id="botonRecargar" onclick="location.reload()">👉 Presioná acá para colocar el siguiente código</button>
   </div>
 
@@ -200,22 +206,18 @@
       "ROBE****: GANÓ 10K EN TRANSFERENCIA", "NANY****: GANÓ 3.000 FICHAS",
       "GRAC****: GANÓ 500 FICHAS", "LUKA****: GANÓ 10% EXTRA",
       "DANI****: GANÓ 5K EN FICHAS", "LORE****: GANÓ 200 FICHAS",
-      "JULI****: GANÓ 1.000 FICHAS", "MONI****: GANÓ 3K EN TRANSFERENCIA",
-      "TUKI****: GANÓ 3.500 FICHAS", "PICH****: GANÓ 30% EXTRA",
-      "MATE****: GANÓ 100 FICHAS", "NATI****: GANÓ 1.500 FICHAS",
-      "MAGA****: GANÓ 4K EN TRANSFERENCIA", "BELA****: GANÓ 2.000 FICHAS"
+      "JULI****: GANÓ 1.000 FICHAS", "MONI****: GANÓ 3K EN TRANSFERENCIA"
     ];
 
-    const contenedorPremios = document.getElementById("premios-automaticos");
+    const premioTexto = document.getElementById("premioTexto");
 
     function mostrarPremio() {
       const mensaje = premios[Math.floor(Math.random() * premios.length)];
-      contenedorPremios.innerHTML = `<div class="notificacion-premio">${mensaje}</div>`;
+      premioTexto.innerText = mensaje;
     }
 
-    setInterval(mostrarPremio, 5000);
+    setInterval(mostrarPremio, 6000);
     mostrarPremio();
   </script>
-
 </body>
 </html>
