@@ -102,6 +102,19 @@
       50% { transform: translateY(-5px); }
       100% { transform: translateY(0); }
     }
+
+    #botonRecargar {
+      margin-top: 30px;
+      padding: 10px 22px;
+      font-size: 16px;
+      background-color: #222;
+      color: #00ccff;
+      border: 2px solid #00ccff;
+      border-radius: 30px;
+      cursor: pointer;
+      display: none;
+      animation: aparecer 0.4s ease;
+    }
   </style>
 </head>
 <body>
@@ -115,6 +128,7 @@
     <div id="resultado"></div>
     <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
     <div id="premios-automaticos"></div>
+    <button id="botonRecargar" onclick="location.reload()">👉 Presioná acá para colocar el siguiente código</button>
   </div>
 
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
@@ -126,6 +140,7 @@
       const codigoInput = document.getElementById("codigo");
       const boton = document.getElementById("botonTirar");
       const resultado = document.getElementById("resultado");
+      const botonRecargar = document.getElementById("botonRecargar");
       const codigoIngresado = codigoInput.value.trim();
 
       if (!codigoIngresado) {
@@ -160,9 +175,9 @@
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
         }
 
-        // 🚫 Desactivar campo y botón
         codigoInput.disabled = true;
         boton.disabled = true;
+        botonRecargar.style.display = "inline-block";
       })
       .catch(error => {
         console.error("Error al verificar el código:", error);
@@ -170,6 +185,7 @@
         resultado.innerHTML = "❌ Código inválido.";
         codigoInput.disabled = true;
         boton.disabled = true;
+        botonRecargar.style.display = "inline-block";
       });
     }
 
