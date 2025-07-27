@@ -116,15 +116,17 @@
     <div class="leyenda">🍀 Girá la rueda y probá tu suerte 🍀</div>
     <div id="premios-automaticos"></div>
   </div>
+
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
   <script>
     const usados = JSON.parse(localStorage.getItem('usados') || '{}');
 
     function tirar() {
-      const codigoIngresado = document.getElementById("codigo").value.trim();
-      const resultado = document.getElementById("resultado");
+      const codigoInput = document.getElementById("codigo");
       const boton = document.getElementById("botonTirar");
+      const resultado = document.getElementById("resultado");
+      const codigoIngresado = codigoInput.value.trim();
 
       if (!codigoIngresado) {
         resultado.style.color = "orange";
@@ -146,9 +148,8 @@
       .then(response => response.json())
       .then(data => {
         if (data.estado === "valido") {
-          boton.style.display = "none";
           resultado.style.color = "#00ff00";
-          resultado.innerHTML = "✅ " + data.mensaje;
+          resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
         } else if (data.estado === "usado") {
@@ -158,11 +159,17 @@
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
         }
+
+        // 🚫 Desactivar campo y botón
+        codigoInput.disabled = true;
+        boton.disabled = true;
       })
       .catch(error => {
         console.error("Error al verificar el código:", error);
         resultado.style.color = "red";
         resultado.innerHTML = "❌ Código inválido.";
+        codigoInput.disabled = true;
+        boton.disabled = true;
       });
     }
 
@@ -204,5 +211,6 @@
     setInterval(mostrarPremio, 5000);
     mostrarPremio();
   </script>
+
 </body>
 </html>
