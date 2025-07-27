@@ -17,14 +17,26 @@
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 38px;
       color: #ff0000;
       text-shadow:
-        0 0 6px #fff,
-        0 0 12px #ff0000,
-        0 0 18px #ff0000,
-        0 0 24px #ff0000;
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #ff0000,
+        0 0 20px #ff0000,
+        0 0 25px #ff0000,
+        0 0 30px #ff0000;
       margin-top: 20px;
+      animation: latido 1.3s infinite;
+    }
+
+    @keyframes latido {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.07);
+      }
     }
 
     #contenedor {
@@ -88,7 +100,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .mensaje-final, .mensaje-extra {
+    .mensaje-extra {
       margin-top: 25px;
       font-size: 18px;
       color: #00ccff;
@@ -194,31 +206,16 @@
     }
 
     const premios = [
-      "RAUL****: GANÓ 100K EN TRANSFERENCIA", "MARI****: GANÓ 3K EN FICHAS",
-      "LORE****: GANÓ 500 FICHAS", "BETO****: GANÓ 2.000 FICHAS",
-      "CARO****: GANÓ 30% DE REGALO", "XBET****: GANÓ 1.000 FICHAS",
-      "RICH****: GANÓ 10K EN TRANSFERENCIA", "NANY****: GANÓ 3.000 FICHAS",
-      "GRIC****: GANÓ 500 FICHAS", "LUKA****: GANÓ 10% EXTRA",
+      "RUBE****: GANÓ 100K EN TRANSFERENCIA", "MARI****: GANÓ 3K EN FICHAS",
+      "LURD****: GANÓ 500 FICHAS", "BETO****: GANÓ 2.000 FICHAS",
+      "CARL****: GANÓ 30% DE REGALO", "XBET****: GANÓ 1.000 FICHAS",
+      "ROBE****: GANÓ 10K EN TRANSFERENCIA", "NANY****: GANÓ 3.000 FICHAS",
+      "GRAC****: GANÓ 500 FICHAS", "LUKA****: GANÓ 10% EXTRA",
       "DANI****: GANÓ 5K EN FICHAS", "LORE****: GANÓ 200 FICHAS",
-      "MART****: GANÓ 1.000 FICHAS", "MONI****: GANÓ 3K EN TRANSFERENCIA",
-      "TEMI****: GANÓ 3.500 FICHAS", "PICH****: GANÓ 30% EXTRA",
-      "MAIT****: GANÓ 100 FICHAS", "NATI****: GANÓ 1.500 FICHAS",
-      "MARA****: GANÓ 4K EN TRANSFERENCIA", "BELA****: GANÓ 2.000 FICHAS",
-      "ESTE****: GANÓ 3.000 FICHAS", "RAFA****: GANÓ 10K EN FICHAS",
-      "SAMA****: GANÓ 20% EXTRA", "CHIK****: GANÓ 500 FICHAS",
-      "LUJA****: GANÓ 3.000 FICHAS", "ALFA****: GANÓ 7K EN TRANSFERENCIA",
-      "PAUL****: GANÓ 1.200 FICHAS", "FERN****: GANÓ 10% DE REGALO",
-      "BELE****: GANÓ 3K EN FICHAS", "RULO****: GANÓ 5.000 FICHAS",
-      "LUKA****: GANÓ 10K EN TRANSFERENCIA", "TINA****: GANÓ 4K EN FICHAS",
-      "LAUT****: GANÓ 30% EXTRA", "CECI****: GANÓ 3.500 FICHAS",
-      "COLO****: GANÓ 10K EN FICHAS", "NICO****: GANÓ 2.000 FICHAS",
-      "ROSE****: GANÓ 1.000 FICHAS", "PATA****: GANÓ 20% EXTRA",
-      "LEAN****: GANÓ 3K EN FICHAS", "MAJO****: GANÓ 500 FICHAS",
-      "LETT****: GANÓ 8K EN TRANSFERENCIA", "DORA****: GANÓ 2.000 FICHAS",
-      "2GAS****: GANÓ 1.300 FICHAS", "FRAN****: GANÓ 10% EXTRA",
-      "NELI****: GANÓ 4.500 FICHAS", "ISMA****: GANÓ 600 FICHAS",
-      "KARL****: GANÓ 3K EN FICHAS", "BARB****: GANÓ 5K EN TRANSFERENCIA",
-      "NAHU****: GANÓ 10K EN FICHAS"
+      "JULI****: GANÓ 1.000 FICHAS", "MONI****: GANÓ 3K EN TRANSFERENCIA",
+      "TUKI****: GANÓ 3.500 FICHAS", "PICH****: GANÓ 30% EXTRA",
+      "MATE****: GANÓ 100 FICHAS", "NATI****: GANÓ 1.500 FICHAS",
+      "MAGA****: GANÓ 4K EN TRANSFERENCIA", "BELA****: GANÓ 2.000 FICHAS"
     ];
 
     const contenedorPremios = document.getElementById("premios-automaticos");
