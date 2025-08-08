@@ -131,6 +131,11 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .amarillo {
+      color: yellow;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -151,15 +156,15 @@
         <span class="premio">LORE****: GANÓ 500 FICHAS</span>
         <span class="premio">BETI****: GANÓ 2.000 FICHAS</span>
         <span class="premio">CORI****: GANÓ 30% DE REGALO</span>
-        <span class="premio">ROMI****: GANÓ 1.000 FICHAS</span>
-        <span class="premio">ROJE****: GANÓ 10K EN TRANSFERENCIA</span>
-        <span class="premio">NANU****: GANÓ 3.000 FICHAS</span>
+        <span class="premio">XBET****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">ROBE****: GANÓ 10K EN TRANSFERENCIA</span>
+        <span class="premio">NANC****: GANÓ 3.000 FICHAS</span>
         <span class="premio">GRIC****: GANÓ 500 FICHAS</span>
-        <span class="premio">LUCA****: GANÓ 10% EXTRA</span>
-        <span class="premio">DAII****: GANÓ 5K EN FICHAS</span>
-        <span class="premio">LAUR****: GANÓ 200 FICHAS</span>
-        <span class="premio">JULI****: GANÓ 1.000 FICHAS</span>
-        <span class="premio">MARK****: GANÓ 3K EN TRANSFERENCIA</span>
+        <span class="premio">LUCI****: GANÓ 10% EXTRA</span>
+        <span class="premio">DAMI****: GANÓ 5K EN FICHAS</span>
+        <span class="premio">LAUT****: GANÓ 200 FICHAS</span>
+        <span class="premio">JUAN****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">MARC****: GANÓ 3K EN TRANSFERENCIA</span>
       </div>
     </div>
 
@@ -171,7 +176,6 @@
   <script>
     const usados = JSON.parse(localStorage.getItem('usados') || '{}');
 
-    // Helper: obtener/actualizar contador de intentos por código en este dispositivo
     function getIntentos(codigo) {
       return parseInt(localStorage.getItem('intentos_' + codigo) || '0', 10);
     }
@@ -192,17 +196,16 @@
         return;
       }
 
-      // Si ya quedó marcado como usado en este dispositivo: mostrar leyenda con intentos y cortar
       if (usados[codigoIngresado]) {
         let intentos = getIntentos(codigoIngresado);
-        intentos = intentos > 0 ? intentos + 1 : 2; // si por alguna razón no estaba, asumimos que esta es la 2da vez
+        intentos = intentos > 0 ? intentos + 1 : 2;
         setIntentos(codigoIngresado, intentos);
 
         resultado.style.color = "#ffcc00";
         if (intentos === 2) {
-          resultado.innerHTML = `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})`;
+          resultado.innerHTML = `🚫 Ya ingresaste este código antes <span class="amarillo">(en este dispositivo)</span>. (Intento #${intentos})`;
         } else {
-          resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces en este dispositivo.`;
+          resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces <span class="amarillo">(en este dispositivo)</span>.`;
         }
 
         codigoInput.disabled = true;
@@ -221,25 +224,21 @@
         if (data.estado === "valido") {
           resultado.style.color = "#00ff00";
           resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
-
-          // marcar usado y registrar primer intento exitoso en este dispositivo
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
           setIntentos(codigoIngresado, 1);
 
         } else if (data.estado === "usado") {
-          // en este dispositivo puede ser la primera vez, pero el backend dice usado
           let intentos = getIntentos(codigoIngresado) + 1;
           setIntentos(codigoIngresado, intentos);
 
           resultado.style.color = "#ffcc00";
           if (intentos === 1) {
-            // Primera vez en este dispositivo pero ya gastado en otro
             resultado.innerHTML = "🚫 Este código ya fue utilizado.";
           } else if (intentos === 2) {
-            resultado.innerHTML = `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})`;
+            resultado.innerHTML = `🚫 Ya ingresaste este código antes <span class="amarillo">(en este dispositivo)</span>. (Intento #${intentos})`;
           } else {
-            resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces en este dispositivo.`;
+            resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces <span class="amarillo">(en este dispositivo)</span>.`;
           }
 
         } else {
