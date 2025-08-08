@@ -131,18 +131,11 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    .amarillo {
-      color: yellow;
-      font-weight: bold;
-    }
   </style>
 </head>
 <body>
 
   <h1>XBET 5</h1>
-
-  <audio id="sirena" src="https://www.soundjay.com/misc/sounds/siren-01.mp3" preload="auto"></audio>
 
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
@@ -175,23 +168,19 @@
 
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
+  <!-- Audio de la sirena -->
+  <audio id="sirena" src="sirena.mp3" preload="auto"></audio>
+
   <script>
     const usados = JSON.parse(localStorage.getItem('usados') || '{}');
-
-    function getIntentos(codigo) {
-      return parseInt(localStorage.getItem('intentos_' + codigo) || '0', 10);
-    }
-    function setIntentos(codigo, n) {
-      localStorage.setItem('intentos_' + codigo, String(n));
-    }
 
     function tirar() {
       const codigoInput = document.getElementById("codigo");
       const boton = document.getElementById("botonTirar");
       const resultado = document.getElementById("resultado");
       const botonRecargar = document.getElementById("botonRecargar");
+      const codigoIngresado = codigoInput.value.trim();
       const sirena = document.getElementById("sirena");
-      const codigoIngresado = (codigoInput.value || '').trim().toUpperCase();
 
       if (!codigoIngresado) {
         resultado.style.color = "orange";
@@ -200,24 +189,21 @@
       }
 
       if (usados[codigoIngresado]) {
-        let intentos = getIntentos(codigoIngresado);
-        intentos = intentos > 0 ? intentos + 1 : 2;
-        setIntentos(codigoIngresado, intentos);
-
-        if (intentos >= 2) {
-          sirena.play();
-        }
+        let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
+        intentos++;
+        localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
 
         resultado.style.color = "#ffcc00";
         if (intentos === 2) {
-          resultado.innerHTML = `🚫 Ya ingresaste este código antes <span class="amarillo">(en este dispositivo)</span>. (Intento #${intentos})`;
+          resultado.innerHTML = `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})`;
         } else {
-          resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces <span class="amarillo">(en este dispositivo)</span>.`;
+          resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces en este dispositivo.`;
         }
 
-        codigoInput.disabled = true;
-        boton.disabled = true;
-        botonRecargar.style.display = "inline-block";
+        // Reproducir la sirena
+        sirena.currentTime = 0;
+        sirena.play().catch(e => console.log("Audio bloqueado por navegador", e));
+
         return;
       }
 
@@ -233,25 +219,10 @@
           resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
-          setIntentos(codigoIngresado, 1);
-
+          localStorage.setItem(`intentos_${codigoIngresado}`, 1);
         } else if (data.estado === "usado") {
-          let intentos = getIntentos(codigoIngresado) + 1;
-          setIntentos(codigoIngresado, intentos);
-
-          if (intentos >= 2) {
-            sirena.play();
-          }
-
           resultado.style.color = "#ffcc00";
-          if (intentos === 1) {
-            resultado.innerHTML = "🚫 Este código ya fue utilizado.";
-          } else if (intentos === 2) {
-            resultado.innerHTML = `🚫 Ya ingresaste este código antes <span class="amarillo">(en este dispositivo)</span>. (Intento #${intentos})`;
-          } else {
-            resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces <span class="amarillo">(en este dispositivo)</span>.`;
-          }
-
+          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
