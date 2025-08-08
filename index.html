@@ -15,7 +15,6 @@
       margin: 0;
       padding: 0;
     }
-
     h1 {
       font-size: 38px;
       color: #ff0000;
@@ -29,12 +28,10 @@
       margin-top: 20px;
       animation: latido 1.3s infinite;
     }
-
     @keyframes latido {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.07); }
     }
-
     #contenedor {
       margin: 180px auto 40px;
       max-width: 400px;
@@ -44,7 +41,6 @@
       background-color: rgba(0, 0, 0, 0.4);
       box-shadow: 0 0 20px #000;
     }
-
     input[type="text"] {
       padding: 10px;
       width: 80%;
@@ -54,7 +50,6 @@
       outline: none;
       text-align: center;
     }
-
     button {
       margin-top: 20px;
       padding: 14px 28px;
@@ -66,19 +61,16 @@
       cursor: pointer;
       box-shadow: 0 0 10px #000, 0 0 20px #000;
     }
-
     #resultado {
       margin-top: 20px;
       font-size: 20px;
       min-height: 24px;
     }
-
     .leyenda {
       margin-top: 15px;
       color: #ffffffcc;
       font-size: 16px;
     }
-
     #premios-automaticos {
       overflow: hidden;
       white-space: nowrap;
@@ -86,13 +78,11 @@
       height: 35px;
       position: relative;
     }
-
     .marquesina {
       display: inline-block;
       padding-left: 100%;
       animation: deslizar 30s linear infinite;
     }
-
     .premio {
       display: inline-block;
       margin-right: 50px;
@@ -101,19 +91,16 @@
       color: #00ccff;
       text-shadow: 0 0 5px #000;
     }
-
     @keyframes deslizar {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
-
     .mensaje-extra {
       margin-top: 25px;
       font-size: 18px;
       color: #00ccff;
       text-shadow: 0 0 5px #000;
     }
-
     #botonRecargar {
       margin-top: 30px;
       padding: 10px 22px;
@@ -126,7 +113,6 @@
       display: none;
       animation: aparecer 0.4s ease;
     }
-
     @keyframes aparecer {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -168,11 +154,25 @@
 
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
-  <!-- Audio de la sirena -->
-  <audio id="sirena" src="sirena.mp3" preload="auto"></audio>
-
   <script>
     const usados = JSON.parse(localStorage.getItem('usados') || '{}');
+
+    function setFirstUse(codigo) {
+      const key = `firstUsed_${codigo}`;
+      if (!localStorage.getItem(key)) {
+        localStorage.setItem(key, new Date().toISOString());
+      }
+    }
+    function getFirstUse(codigo) {
+      return localStorage.getItem(`firstUsed_${codigo}`) || null;
+    }
+    function formatFecha(iso) {
+      const d = new Date(iso);
+      const pad = n => String(n).padStart(2, '0');
+      const fecha = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+      const hora  = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      return `${fecha} ${hora}`;
+    }
 
     function tirar() {
       const codigoInput = document.getElementById("codigo");
@@ -180,7 +180,6 @@
       const resultado = document.getElementById("resultado");
       const botonRecargar = document.getElementById("botonRecargar");
       const codigoIngresado = codigoInput.value.trim();
-      const sirena = document.getElementById("sirena");
 
       if (!codigoIngresado) {
         resultado.style.color = "orange";
@@ -192,18 +191,19 @@
         let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
         intentos++;
         localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
+        const first = getFirstUse(codigoIngresado);
+        const cuando = first ? formatFecha(first) : "desconocido";
 
         resultado.style.color = "#ffcc00";
         if (intentos === 2) {
-          resultado.innerHTML = `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})`;
+          resultado.innerHTML =
+            `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})<br>` +
+            `🕒 Primera vez aquí: <b>${cuando}</b>`;
         } else {
-          resultado.innerHTML = `🚫 Ya pusiste este código ${intentos} veces en este dispositivo.`;
+          resultado.innerHTML =
+            `🚫 Ya pusiste este código ${intentos} veces en este dispositivo.<br>` +
+            `🕒 Primera vez aquí: <b>${cuando}</b>`;
         }
-
-        // Reproducir la sirena
-        sirena.currentTime = 0;
-        sirena.play().catch(e => console.log("Audio bloqueado por navegador", e));
-
         return;
       }
 
@@ -220,9 +220,17 @@
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
           localStorage.setItem(`intentos_${codigoIngresado}`, 1);
+          setFirstUse(codigoIngresado);
         } else if (data.estado === "usado") {
+          let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "0", 10) + 1;
+          localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
+          const first = getFirstUse(codigoIngresado);
+          const cuando = first ? formatFecha(first) : "en otro dispositivo";
+
           resultado.style.color = "#ffcc00";
-          resultado.innerHTML = "🚫 Este código ya fue utilizado.";
+          resultado.innerHTML =
+            `🚫 Este código ya fue utilizado. (Intento #${intentos} en este dispositivo)<br>` +
+            `🕒 Primera vez aquí: <b>${cuando}</b>`;
         } else {
           resultado.style.color = "#ff3333";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
