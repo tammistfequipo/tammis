@@ -142,6 +142,8 @@
 
   <h1>XBET 5</h1>
 
+  <audio id="sirena" src="https://www.soundjay.com/misc/sounds/siren-01.mp3" preload="auto"></audio>
+
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
     <br/>
@@ -188,6 +190,7 @@
       const boton = document.getElementById("botonTirar");
       const resultado = document.getElementById("resultado");
       const botonRecargar = document.getElementById("botonRecargar");
+      const sirena = document.getElementById("sirena");
       const codigoIngresado = (codigoInput.value || '').trim().toUpperCase();
 
       if (!codigoIngresado) {
@@ -200,6 +203,10 @@
         let intentos = getIntentos(codigoIngresado);
         intentos = intentos > 0 ? intentos + 1 : 2;
         setIntentos(codigoIngresado, intentos);
+
+        if (intentos >= 2) {
+          sirena.play();
+        }
 
         resultado.style.color = "#ffcc00";
         if (intentos === 2) {
@@ -231,6 +238,10 @@
         } else if (data.estado === "usado") {
           let intentos = getIntentos(codigoIngresado) + 1;
           setIntentos(codigoIngresado, intentos);
+
+          if (intentos >= 2) {
+            sirena.play();
+          }
 
           resultado.style.color = "#ffcc00";
           if (intentos === 1) {
