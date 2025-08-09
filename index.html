@@ -66,6 +66,18 @@
       font-size: 20px;
       min-height: 24px;
     }
+    /* Estilos de mensajes */
+    .resultado-exito,
+    .resultado-aviso,
+    .resultado-error {
+      color: black;
+      font-weight: bold;
+      text-shadow:
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff;
+    }
     .leyenda {
       margin-top: 15px;
       color: #ffffffcc;
@@ -182,7 +194,7 @@
       const codigoIngresado = codigoInput.value.trim();
 
       if (!codigoIngresado) {
-        resultado.style.color = "orange";
+        resultado.className = "resultado-aviso";
         resultado.innerHTML = "⚠️ Ingresá un código.";
         return;
       }
@@ -194,7 +206,7 @@
         const first = getFirstUse(codigoIngresado);
         const cuando = first ? formatFecha(first) : "desconocido";
 
-        resultado.style.color = "#ffcc00";
+        resultado.className = "resultado-aviso";
         if (intentos === 2) {
           resultado.innerHTML =
             `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})<br>` +
@@ -215,7 +227,7 @@
       .then(response => response.json())
       .then(data => {
         if (data.estado === "valido") {
-          resultado.style.color = "#00ff00";
+          resultado.className = "resultado-exito";
           resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
@@ -227,12 +239,12 @@
           const first = getFirstUse(codigoIngresado);
           const cuando = first ? formatFecha(first) : "en otro dispositivo";
 
-          resultado.style.color = "#ffcc00";
+          resultado.className = "resultado-aviso";
           resultado.innerHTML =
             `🚫 Este código ya fue utilizado. (Intento #${intentos} en este dispositivo)<br>` +
             `🕒 Primera vez aquí: <b>${cuando}</b>`;
         } else {
-          resultado.style.color = "#ff3333";
+          resultado.className = "resultado-error";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
         }
 
@@ -242,7 +254,7 @@
       })
       .catch(error => {
         console.error("Error al verificar el código:", error);
-        resultado.style.color = "red";
+        resultado.className = "resultado-error";
         resultado.innerHTML = "❌ Código inválido.";
         codigoInput.disabled = true;
         boton.disabled = true;
