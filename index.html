@@ -1,3 +1,8 @@
+ganaste, ya pusiste este código, inválido, etc.) salgan con verde neón y contorno blanco.
+
+html
+Copiar
+Editar
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -66,17 +71,20 @@
       font-size: 20px;
       min-height: 24px;
     }
-    /* Mensajes en blanco con contorno negro */
+    /* Mensajes con verde neón y contorno blanco */
     .resultado-exito,
     .resultado-aviso,
     .resultado-error {
-      color: white;
+      color: #39ff14; /* Verde neón */
       font-weight: bold;
       text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff,
+         0 0 5px #39ff14,
+         0 0 10px #39ff14,
+         0 0 20px #39ff14;
     }
     .leyenda {
       margin-top: 15px;
