@@ -78,6 +78,17 @@
         -1px  1px 0 #000,
          1px  1px 0 #000;
     }
+    /* NUEVO: estilo rojo para códigos sin premio */
+    .resultado-sinpremio {
+      color: #ff3b3b; /* Rojo */
+      font-weight: bold;
+      text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+    }
+
     .leyenda {
       margin-top: 15px;
       color: #ffffffcc;
@@ -227,12 +238,22 @@
       .then(response => response.json())
       .then(data => {
         if (data.estado === "valido") {
-          resultado.className = "resultado-exito";
-          resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
+          // Detecta "sin premio" y pinta en rojo con el texto pedido
+          const msg = (data.mensaje || "").toLowerCase();
+          if (msg.includes("sin premio")) {
+            resultado.className = "resultado-sinpremio";
+            resultado.textContent = "X SIN PREMIO, PROBA EN TU PROXIMA CARGA";
+          } else {
+            resultado.className = "resultado-exito";
+            resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
+          }
+
+          // Marcar como usado y registrar primer uso igual que antes
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
           localStorage.setItem(`intentos_${codigoIngresado}`, 1);
           setFirstUse(codigoIngresado);
+
         } else if (data.estado === "usado") {
           let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "0", 10) + 1;
           localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
