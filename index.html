@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>XBET 5</title>
+  <title>TEAM L-5</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: url("/519607810_122102712680945628_6741922299376501090_n.jpg") no-repeat center center fixed;
+      background: url("f1ec4f7e-3b11-414c-bb1c-3db302c97c66.jpg") no-repeat center center fixed;
       background-size: cover;
       font-family: 'Orbitron', sans-serif;
       color: white;
@@ -66,11 +66,10 @@
       font-size: 20px;
       min-height: 24px;
     }
-    /* Mensajes con verde casino y contorno negro */
     .resultado-exito,
     .resultado-aviso,
     .resultado-error {
-      color: #00ff55; /* Verde casino */
+      color: #00ff55;
       font-weight: bold;
       text-shadow:
         -1px -1px 0 #000,
@@ -78,9 +77,8 @@
         -1px  1px 0 #000,
          1px  1px 0 #000;
     }
-    /* NUEVO: estilo rojo para códigos sin premio */
     .resultado-sinpremio {
-      color: #ff3b3b; /* Rojo */
+      color: #ff3b3b;
       font-weight: bold;
       text-shadow:
         -1px -1px 0 #000,
@@ -88,7 +86,6 @@
         -1px  1px 0 #000,
          1px  1px 0 #000;
     }
-
     .leyenda {
       margin-top: 15px;
       color: #ffffffcc;
@@ -144,7 +141,7 @@
 </head>
 <body>
 
-  <h1>XBET 5</h1>
+  <h1>TEAM L-5</h1>
 
   <div id="contenedor">
     <input type="text" id="codigo" placeholder="Ingresá tu código"/>
@@ -160,7 +157,7 @@
         <span class="premio">LORE****: GANÓ 500 FICHAS</span>
         <span class="premio">BETI****: GANÓ 2.000 FICHAS</span>
         <span class="premio">CORI****: GANÓ 30% DE REGALO</span>
-        <span class="premio">XBET****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">TEAM****: GANÓ 1.000 FICHAS</span>
         <span class="premio">ROBE****: GANÓ 10K EN TRANSFERENCIA</span>
         <span class="premio">NANC****: GANÓ 3.000 FICHAS</span>
         <span class="premio">GRIC****: GANÓ 500 FICHAS</span>
@@ -169,6 +166,7 @@
         <span class="premio">LAUT****: GANÓ 200 FICHAS</span>
         <span class="premio">JUAN****: GANÓ 1.000 FICHAS</span>
         <span class="premio">MARC****: GANÓ 3K EN TRANSFERENCIA</span>
+        <span class="premio">TEAM****: GANÓ 2K EN FICHAS</span>
       </div>
     </div>
 
@@ -238,7 +236,6 @@
       .then(response => response.json())
       .then(data => {
         if (data.estado === "valido") {
-          // Detecta "sin premio" y pinta en rojo con el texto pedido
           const msg = (data.mensaje || "").toLowerCase();
           if (msg.includes("sin premio")) {
             resultado.className = "resultado-sinpremio";
@@ -247,8 +244,6 @@
             resultado.className = "resultado-exito";
             resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
           }
-
-          // Marcar como usado y registrar primer uso igual que antes
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
           localStorage.setItem(`intentos_${codigoIngresado}`, 1);
