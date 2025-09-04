@@ -24,9 +24,11 @@
       margin: 0;
       padding: 0;
     }
+
+    /* Título con entrada tipo estrella fugaz + latido */
     h1 {
       font-family: 'Luckiest Guy', cursive;
-      font-size: clamp(48px, 8vw, 70px); /* más grande */
+      font-size: clamp(48px, 8vw, 70px);
       font-weight: 900;
       letter-spacing: 3px;
       color: #ff0000;
@@ -42,7 +44,15 @@
          0 0 12px #ff0000,
          0 0 24px #ff0000;
       margin: 25px 0 0;
-      animation: latido 1.3s infinite;
+      /* Primera animación: zoom/impacto. Segunda: latido infinito (arranca luego de 1.2s) */
+      animation: entradaZoom 1.2s ease-out forwards, latido 1.3s infinite 1.2s;
+      will-change: transform, opacity;
+    }
+    @keyframes entradaZoom {
+      0%   { transform: scale(0) rotate(-15deg); opacity: 0; filter: blur(2px); }
+      60%  { transform: scale(1.22) rotate(3deg);  opacity: 1;  filter: blur(0); }
+      80%  { transform: scale(0.92) rotate(-2deg); }
+      100% { transform: scale(1) rotate(0deg); }
     }
     @keyframes latido { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
 
@@ -139,6 +149,7 @@
 
     .leyenda { margin-top: 14px; color: #ffffffcc; font-size: 16px; }
 
+    /* MARQUESINA */
     #premios-automaticos { overflow: hidden; white-space: nowrap; margin-top: 22px; height: 35px; position: relative; }
     .marquesina { display: inline-block; padding-left: 100%; animation: deslizar 30s linear infinite; }
     .marquesina:hover { animation-play-state: paused; }
@@ -154,6 +165,7 @@
     }
     @keyframes aparecer { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
+    /* TOASTS */
     .toasts { position: fixed; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
     .toast {
       background: rgba(0,0,0,.8);
@@ -167,6 +179,7 @@
     .toast.info{ border-color: var(--neo-cyan); }
     @keyframes toastIn{ from{opacity:0; transform: translateY(-8px)} to{opacity:1; transform: translateY(0)} }
 
+    /* CONFETTI */
     #confetti-layer{ position: fixed; inset:0; pointer-events:none; z-index: 9998; overflow: hidden; }
     .confetto{ position:absolute; width:8px; height:14px; opacity:0.9; will-change: transform, opacity; border-radius:2px; }
 
@@ -214,11 +227,13 @@
 
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
+  <!-- capas de feedback -->
   <div id="confetti-layer" aria-hidden="true"></div>
   <div class="toasts" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    // El JS de validación se mantiene igual al que ya tenés.
+    /* Tu JS de verificación permanece idéntico al que ya tenés funcionando
+       (bloqueo por refresco, toasts, confetti, etc.). */
   </script>
 </body>
 </html>
