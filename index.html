@@ -168,7 +168,49 @@
 </head>
 <body>
   <h1 id="titulo">TEAM L-5</h1>
-  <!-- resto igual que el index anterior -->
-  ...
+
+  <div id="contenedor" aria-labelledby="titulo">
+    <div class="campo">
+      <input type="text" id="codigo" placeholder="Ingresá tu código" aria-label="Ingresá tu código" autocomplete="off" inputmode="latin" />
+    </div>
+    <br/>
+    <button id="botonTirar" onclick="tirar()" aria-label="Tirar la rueda">🎰 Tirar la rueda</button>
+    <div id="resultado" role="status" aria-live="polite"></div>
+    <div class="leyenda">🍀 Con tu carga, jugás con código ruletero — Pagos 24/7 · Atención 24hs</div>
+
+    <div id="premios-automaticos" aria-hidden="true">
+      <div class="marquesina">
+        <span class="premio">RODR****: GANÓ 100K EN TRANSFERENCIA</span>
+        <span class="premio">MERI****: GANÓ 3K EN FICHAS</span>
+        <span class="premio">LORE****: GANÓ 500 FICHAS</span>
+        <span class="premio">BETI****: GANÓ 2.000 FICHAS</span>
+        <span class="premio">CORI****: GANÓ 30% DE REGALO</span>
+        <span class="premio">TEAM****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">ROBE****: GANÓ 10K EN TRANSFERENCIA</span>
+        <span class="premio">NANC****: GANÓ 3.000 FICHAS</span>
+        <span class="premio">GRIC****: GANÓ 500 FICHAS</span>
+        <span class="premio">LUCI****: GANÓ 10% EXTRA</span>
+        <span class="premio">DAMI****: GANÓ 5K EN FICHAS</span>
+        <span class="premio">LAUT****: GANÓ 200 FICHAS</span>
+        <span class="premio">JUAN****: GANÓ 1.000 FICHAS</span>
+        <span class="premio">MARC****: GANÓ 3K EN TRANSFERENCIA</span>
+        <span class="premio">TEAM****: GANÓ 2K EN FICHAS</span>
+      </div>
+    </div>
+
+    <button id="botonRecargar" onclick="location.reload()">👉 Presioná acá para colocar el siguiente código</button>
+  </div>
+
+  <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
+
+  <!-- capas de feedback -->
+  <div id="confetti-layer" aria-hidden="true"></div>
+  <div class="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- JS igual al anterior (tirar, confetti, toasts, etc.) -->
+  <script>
+    /* Aquí va todo el script que ya te pasé en la última versión,
+       no cambió nada salvo el CSS del título */
+  </script>
 </body>
 </html>
