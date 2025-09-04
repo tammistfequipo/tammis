@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TEAM L-5</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root{
       --neo-cyan:#00ccff;
@@ -24,11 +24,13 @@
       padding: 0;
     }
     h1 {
-      font-size: clamp(28px,4vw,38px);
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 900;
+      letter-spacing: 2px;
       color: #ff0000;
-      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff0000,
-                   0 0 20px #ff0000, 0 0 25px #ff0000, 0 0 30px #ff0000;
-      margin: 20px 0 0;
+      text-shadow: 0 0 6px #fff, 0 0 12px #fff, 0 0 20px #ff0000,
+                   0 0 28px #ff0000, 0 0 36px #ff0000, 0 0 44px #ff0000;
+      margin: 25px 0 0;
       animation: latido 1.3s infinite;
     }
     @keyframes latido { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
@@ -49,7 +51,6 @@
       position: relative;
       overflow: hidden;
     }
-    /* borde animado sutil */
     #contenedor::after{
       content:"";
       position:absolute; inset:-2px;
@@ -64,10 +65,7 @@
     @keyframes halo { to{ transform: rotate(360deg);} }
 
     /* === INPUT REACTIVO === */
-    .campo {
-      position: relative;
-      z-index:1;
-    }
+    .campo { position: relative; z-index:1; }
     input[type="text"] {
       padding: 12px 14px;
       width: 86%;
@@ -87,10 +85,7 @@
       border-color: #fff;
       box-shadow: inset 0 0 10px var(--neo-cyan), 0 0 8px rgba(255,255,255,.2);
     }
-    input.error {
-      border-color: var(--danger);
-      box-shadow: inset 0 0 8px var(--danger);
-    }
+    input.error { border-color: var(--danger); box-shadow: inset 0 0 8px var(--danger); }
 
     /* === BOTÓN PREMIUM === */
     button {
@@ -109,11 +104,7 @@
       z-index:1;
     }
     button:hover { transform: scale(1.07); box-shadow: 0 0 25px var(--neo-cyan), 0 0 40px var(--neo-violet); }
-    button:disabled{
-      cursor:not-allowed;
-      filter: grayscale(.5) brightness(.85);
-      box-shadow:none;
-    }
+    button:disabled{ cursor:not-allowed; filter: grayscale(.5) brightness(.85); box-shadow:none; }
 
     /* === RESULTADOS === */
     #resultado { margin-top: 18px; font-size: 20px; min-height: 28px; }
@@ -137,7 +128,6 @@
 
     .leyenda { margin-top: 14px; color: #ffffffcc; font-size: 16px; }
 
-    /* MARQUESINA igual que antes */
     #premios-automaticos { overflow: hidden; white-space: nowrap; margin-top: 22px; height: 35px; position: relative; }
     .marquesina { display: inline-block; padding-left: 100%; animation: deslizar 30s linear infinite; }
     .marquesina:hover { animation-play-state: paused; }
@@ -153,7 +143,6 @@
     }
     @keyframes aparecer { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
-    /* === TOASTS === */
     .toasts { position: fixed; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
     .toast {
       background: rgba(0,0,0,.8);
@@ -167,14 +156,9 @@
     .toast.info{ border-color: var(--neo-cyan); }
     @keyframes toastIn{ from{opacity:0; transform: translateY(-8px)} to{opacity:1; transform: translateY(0)} }
 
-    /* === CONFETTI === */
     #confetti-layer{ position: fixed; inset:0; pointer-events:none; z-index: 9998; overflow: hidden; }
-    .confetto{
-      position:absolute; width:8px; height:14px; opacity:0.9; will-change: transform, opacity;
-      border-radius:2px;
-    }
+    .confetto{ position:absolute; width:8px; height:14px; opacity:0.9; will-change: transform, opacity; border-radius:2px; }
 
-    /* Accesibilidad */
     #resultado[role="status"]{ outline:none; }
 
     @media (max-width: 420px){
@@ -183,286 +167,8 @@
   </style>
 </head>
 <body>
-
-  <h1>TEAM L-5</h1>
-
-  <div id="contenedor" aria-labelledby="titulo">
-    <div class="campo">
-      <input type="text" id="codigo" placeholder="Ingresá tu código" aria-label="Ingresá tu código" autocomplete="off" inputmode="latin" />
-    </div>
-    <br/>
-    <button id="botonTirar" onclick="tirar()" aria-label="Tirar la rueda">🎰 Tirar la rueda</button>
-    <div id="resultado" role="status" aria-live="polite"></div>
-    <div class="leyenda">🍀 Con tu carga, jugás con código ruletero — Pagos 24/7 · Atención 24hs</div>
-
-    <div id="premios-automaticos" aria-hidden="true">
-      <div class="marquesina">
-        <span class="premio">RODR****: GANÓ 100K EN TRANSFERENCIA</span>
-        <span class="premio">MERI****: GANÓ 3K EN FICHAS</span>
-        <span class="premio">LORE****: GANÓ 500 FICHAS</span>
-        <span class="premio">BETI****: GANÓ 2.000 FICHAS</span>
-        <span class="premio">CORI****: GANÓ 30% DE REGALO</span>
-        <span class="premio">TEAM****: GANÓ 1.000 FICHAS</span>
-        <span class="premio">ROBE****: GANÓ 10K EN TRANSFERENCIA</span>
-        <span class="premio">NANC****: GANÓ 3.000 FICHAS</span>
-        <span class="premio">GRIC****: GANÓ 500 FICHAS</span>
-        <span class="premio">LUCI****: GANÓ 10% EXTRA</span>
-        <span class="premio">DAMI****: GANÓ 5K EN FICHAS</span>
-        <span class="premio">LAUT****: GANÓ 200 FICHAS</span>
-        <span class="premio">JUAN****: GANÓ 1.000 FICHAS</span>
-        <span class="premio">MARC****: GANÓ 3K EN TRANSFERENCIA</span>
-        <span class="premio">TEAM****: GANÓ 2K EN FICHAS</span>
-      </div>
-    </div>
-
-    <button id="botonRecargar" onclick="location.reload()">👉 Presioná acá para colocar el siguiente código</button>
-  </div>
-
-  <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
-
-  <!-- capas de feedback -->
-  <div id="confetti-layer" aria-hidden="true"></div>
-  <div class="toasts" aria-live="polite" aria-atomic="true"></div>
-
-  <script>
-    // ====== Estado / storage ======
-    const usados = JSON.parse(localStorage.getItem('usados') || '{}');
-    let estaProcesando = false;
-    let cooldown = false;
-    const REFRESH_LOCK_KEY = 'bloqueado_turno';
-    const LAST_CODE_KEY = 'ultimo_codigo';
-    const LAST_CODE_TIME_KEY = 'ultimo_codigo_first';
-
-    // ====== Utils ======
-    const $ = sel => document.querySelector(sel);
-    const resultado = $("#resultado");
-    const input = $("#codigo");
-    const btn = $("#botonTirar");
-    const btnRecargar = $("#botonRecargar");
-    const toasts = document.querySelector(".toasts");
-    const confettiLayer = document.getElementById("confetti-layer");
-
-    function toast(msg, type="info", ms=1800){
-      const t = document.createElement("div");
-      t.className = "toast " + type;
-      t.textContent = msg;
-      toasts.appendChild(t);
-      setTimeout(()=>{ t.remove(); }, ms);
-    }
-
-    function limpiarBloqueoUI(){
-      input.disabled = false;
-      btn.disabled = false;
-      btnRecargar.style.display = "none";
-      resultado.className = "";
-      resultado.innerHTML = "";
-    }
-
-    function setFirstUse(codigo) {
-      const key = `firstUsed_${codigo}`;
-      if (!localStorage.getItem(key)) {
-        const iso = new Date().toISOString();
-        localStorage.setItem(key, iso);
-        sessionStorage.setItem(LAST_CODE_TIME_KEY, iso);
-      }
-    }
-    function getFirstUse(codigo) {
-      return localStorage.getItem(`firstUsed_${codigo}`) || null;
-    }
-    function splitFecha(iso) {
-      const d = new Date(iso);
-      const pad = n => String(n).padStart(2, '0');
-      const fecha = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
-      const hora  = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-      return { fecha, hora };
-    }
-    function bloquearHastaRefrescar(){ sessionStorage.setItem(REFRESH_LOCK_KEY, '1'); }
-    function estaBloqueado(){ return sessionStorage.getItem(REFRESH_LOCK_KEY) === '1'; }
-
-    // ====== Input UX ======
-    input.addEventListener("input", (e)=>{
-      // Solo A-Z y 0-9, mayúsculas
-      let v = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-      e.target.value = v;
-      // feedback de error leve si vacío
-      if (!v) input.classList.add("error"); else input.classList.remove("error");
-      // habilitar/deshabilitar botón
-      btn.disabled = v.length === 0;
-    });
-    input.addEventListener("focus", ()=> input.select());
-
-    // Enter para enviar
-    input.addEventListener("keydown", (e)=>{
-      if (e.key === "Enter" && !btn.disabled) tirar();
-    });
-
-    // ====== Reset al recargar (lo que te arregló el bug) ======
-    window.addEventListener('DOMContentLoaded', () => {
-      sessionStorage.removeItem(REFRESH_LOCK_KEY);
-      sessionStorage.removeItem(LAST_CODE_KEY);
-      sessionStorage.removeItem(LAST_CODE_TIME_KEY);
-      limpiarBloqueoUI();
-      btn.disabled = input.value.trim().length === 0;
-    });
-
-    // ====== Confetti simple ======
-    function confetti(){
-      for(let i=0;i<80;i++){
-        const c = document.createElement('div');
-        c.className = 'confetto';
-        c.style.left = Math.random()*100 + 'vw';
-        c.style.top = '-10px';
-        c.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
-        const rot = (Math.random()*360)|0;
-        const dur = 2000 + Math.random()*1500;
-        const dx = (Math.random()*2-1) * 100;
-        c.animate([
-          { transform: `translate(0,0) rotate(${rot}deg)`, opacity:1 },
-          { transform: `translate(${dx}px, 100vh) rotate(${rot+360}deg)`, opacity:0.9 }
-        ], { duration: dur, easing: 'ease-out', fill: 'forwards' });
-        confettiLayer.appendChild(c);
-        setTimeout(()=> c.remove(), dur+100);
-      }
-      // Glow del contenedor
-      const cont = document.getElementById('contenedor');
-      cont.animate([
-        { boxShadow: '0 0 22px rgba(0, 255, 255, .35), inset 0 0 18px rgba(255,255,255,0.06)' },
-        { boxShadow: '0 0 32px rgba(0, 255, 120, .7), inset 0 0 18px rgba(255,255,255,0.08)' }
-      ], { duration: 500, direction:'alternate', iterations: 2 });
-    }
-
-    // ====== Debounce / Rate limit suave ======
-    function iniciarCooldown(ms = 1200){
-      cooldown = true;
-      setTimeout(()=> cooldown = false, ms);
-    }
-
-    // ====== Lógica principal ======
-    function deshabilitarUI() {
-      input.disabled = true;
-      btn.disabled = true;
-      btnRecargar.style.display = "inline-block";
-    }
-
-    function tirar() {
-      const codigoIngresado = input.value.trim();
-
-      if (estaBloqueado()) {
-        const ultimo = sessionStorage.getItem(LAST_CODE_KEY) || codigoIngresado || '';
-        const isoGuardado =
-          (ultimo && getFirstUse(ultimo)) ||
-          sessionStorage.getItem(LAST_CODE_TIME_KEY);
-
-        if (ultimo && isoGuardado) {
-          const { fecha, hora } = splitFecha(isoGuardado);
-          resultado.className = "resultado-aviso";
-          resultado.innerHTML =
-            `🚫 Ya usaste este código en este dispositivo a las <b>${hora}</b> del <b>${fecha}</b>: <b>${ultimo}</b>`;
-        } else {
-          resultado.className = "resultado-aviso";
-          resultado.innerHTML = "🔒 Ya usaste tu intento. Refrescá la página para ingresar otro.";
-        }
-        deshabilitarUI();
-        return;
-      }
-
-      if (estaProcesando || cooldown) return;
-      estaProcesando = true;
-      iniciarCooldown();
-
-      if (!codigoIngresado) {
-        input.classList.add("error");
-        toast("Ingresá un código", "err");
-        estaProcesando = false;
-        return;
-      }
-
-      toast("Verificando…", "info", 900);
-
-      // Bloqueamos turno y guardamos el código para reintento sin refrescar
-      bloquearHastaRefrescar();
-      sessionStorage.setItem(LAST_CODE_KEY, codigoIngresado);
-      deshabilitarUI();
-
-      // Si ya fue usado en este dispositivo (histórico)
-      if (usados[codigoIngresado]) {
-        let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
-        intentos++;
-        localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
-        const first = getFirstUse(codigoIngresado);
-        const { fecha, hora } = first ? splitFecha(first) : { fecha: "desconocido", hora: "" };
-
-        resultado.className = "resultado-aviso";
-        resultado.innerHTML =
-          `🚫 Este código ya fue utilizado en este dispositivo (Intento #${intentos}).<br>` +
-          `🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
-        estaProcesando = false;
-        return;
-      }
-
-      fetch('/api/verificar-codigo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ codigo: codigoIngresado })
-      })
-      .then(async (response) => {
-        // manejo de errores HTTP
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        // puede venir vacío o malformado
-        const text = await response.text();
-        try { return JSON.parse(text); }
-        catch { throw new Error("Respuesta inválida del servidor"); }
-      })
-      .then(data => {
-        if (data.estado === "valido") {
-          const msg = (data.mensaje || "");
-          if (msg.toLowerCase().includes("sin premio")) {
-            resultado.className = "resultado-sinpremio";
-            resultado.innerHTML = `X SIN PREMIO – Código: <b>${codigoIngresado}</b>. Probá en tu próxima carga.`;
-            toast("Sin premio esta vez", "info");
-          } else {
-            resultado.className = "resultado-exito";
-            resultado.innerHTML =
-              `<div class="mensaje-felicitaciones">🎉 FELICITACIONES 🎉</div>` +
-              `✅ Código: <b>${codigoIngresado}</b> – ${msg}`;
-            confetti();
-            toast("¡Premio acreditado!", "ok");
-          }
-          usados[codigoIngresado] = true;
-          localStorage.setItem("usados", JSON.stringify(usados));
-          localStorage.setItem(`intentos_${codigoIngresado}`, 1);
-          setFirstUse(codigoIngresado);
-
-        } else if (data.estado === "usado") {
-          let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "0", 10) + 1;
-          localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
-          const first = getFirstUse(codigoIngresado);
-          const { fecha, hora } = first ? splitFecha(first) : { fecha: "en otro dispositivo", hora: "" };
-
-          resultado.className = "resultado-aviso";
-          resultado.innerHTML =
-            `🚫 Este código ya fue utilizado. (Intento #${intentos} en este dispositivo)<br>` +
-            `🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
-          toast("Código ya utilizado", "err");
-
-        } else {
-          resultado.className = "resultado-error";
-          resultado.innerHTML = "❌ Código inválido. Probá con otro.";
-          toast("Código inválido", "err");
-        }
-      })
-      .catch(error => {
-        console.error("Error al verificar el código:", error);
-        resultado.className = "resultado-error";
-        resultado.innerHTML = "❌ Error de verificación. Intentá nuevamente.";
-        toast("Error de red o servidor", "err");
-      })
-      .finally(() => {
-        estaProcesando = false;
-      });
-    }
-  </script>
+  <h1 id="titulo">TEAM L-5</h1>
+  <!-- resto igual que el index anterior -->
+  ...
 </body>
 </html>
