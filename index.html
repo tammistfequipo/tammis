@@ -48,6 +48,17 @@
       color: #ff3b3b; font-weight: bold;
       text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
+    .mensaje-felicitaciones {
+      font-size: 24px;
+      color: #00ff55;
+      text-shadow: 0 0 5px #000, 0 0 15px #00ff55, 0 0 25px #00ff55;
+      margin-bottom: 10px;
+      animation: brillo 1.2s infinite alternate;
+    }
+    @keyframes brillo {
+      from { text-shadow: 0 0 5px #000, 0 0 10px #00ff55, 0 0 15px #00ff55; }
+      to   { text-shadow: 0 0 10px #000, 0 0 20px #00ff55, 0 0 40px #00ff55; }
+    }
     .leyenda { margin-top: 15px; color: #ffffffcc; font-size: 16px; }
     #premios-automaticos { overflow: hidden; white-space: nowrap; margin-top: 25px; height: 35px; position: relative; }
     .marquesina { display: inline-block; padding-left: 100%; animation: deslizar 30s linear infinite; }
@@ -142,7 +153,6 @@
       const resultado = document.getElementById("resultado");
       const codigoIngresado = codigoInput.value.trim();
 
-      // Si ya usó el turno, mostrar mensaje con código + fecha/hora
       if (estaBloqueado()) {
         const ultimo = sessionStorage.getItem(LAST_CODE_KEY) || codigoIngresado || '';
         const isoGuardado =
@@ -204,7 +214,9 @@
             resultado.innerHTML = `X SIN PREMIO – Código: <b>${codigoIngresado}</b>. Probá en tu próxima carga.`;
           } else {
             resultado.className = "resultado-exito";
-            resultado.innerHTML = `✅ Código: <b>${codigoIngresado}</b> – ${msg}`;
+            resultado.innerHTML =
+              `<div class="mensaje-felicitaciones">🎉 FELICITACIONES 🎉</div>` +
+              `✅ Código: <b>${codigoIngresado}</b> – ${msg}`;
           }
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
