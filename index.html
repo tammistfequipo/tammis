@@ -19,124 +19,47 @@
       font-size: 38px;
       color: #ff0000;
       text-shadow:
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #ff0000,
-        0 0 20px #ff0000,
-        0 0 25px #ff0000,
-        0 0 30px #ff0000;
+        0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff0000,
+        0 0 20px #ff0000, 0 0 25px #ff0000, 0 0 30px #ff0000;
       margin-top: 20px;
       animation: latido 1.3s infinite;
     }
-    @keyframes latido {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.07); }
-    }
+    @keyframes latido { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
     #contenedor {
-      margin: 180px auto 40px;
-      max-width: 400px;
-      padding: 30px;
-      border-radius: 20px;
-      border: 3px solid #000000;
-      background-color: rgba(0, 0, 0, 0.4);
-      box-shadow: 0 0 20px #000;
+      margin: 180px auto 40px; max-width: 400px; padding: 30px;
+      border-radius: 20px; border: 3px solid #000000;
+      background-color: rgba(0,0,0,0.4); box-shadow: 0 0 20px #000;
     }
     input[type="text"] {
-      padding: 10px;
-      width: 80%;
-      font-size: 16px;
-      border: 2px solid #000;
-      border-radius: 8px;
-      outline: none;
-      text-align: center;
+      padding: 10px; width: 80%; font-size: 16px; border: 2px solid #000;
+      border-radius: 8px; outline: none; text-align: center;
     }
     button {
-      margin-top: 20px;
-      padding: 14px 28px;
-      font-size: 18px;
-      background-color: #00ccff;
-      border: none;
-      color: black;
-      border-radius: 100px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #000, 0 0 20px #000;
+      margin-top: 20px; padding: 14px 28px; font-size: 18px;
+      background-color: #00ccff; border: none; color: black;
+      border-radius: 100px; cursor: pointer; box-shadow: 0 0 10px #000, 0 0 20px #000;
     }
-    #resultado {
-      margin-top: 20px;
-      font-size: 20px;
-      min-height: 24px;
-    }
-    .resultado-exito,
-    .resultado-aviso,
-    .resultado-error {
-      color: #00ff55;
-      font-weight: bold;
-      text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
+    #resultado { margin-top: 20px; font-size: 20px; min-height: 24px; }
+    .resultado-exito,.resultado-aviso,.resultado-error {
+      color: #00ff55; font-weight: bold;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
     .resultado-sinpremio {
-      color: #ff3b3b;
-      font-weight: bold;
-      text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
+      color: #ff3b3b; font-weight: bold;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
-    .leyenda {
-      margin-top: 15px;
-      color: #ffffffcc;
-      font-size: 16px;
-    }
-    #premios-automaticos {
-      overflow: hidden;
-      white-space: nowrap;
-      margin-top: 25px;
-      height: 35px;
-      position: relative;
-    }
-    .marquesina {
-      display: inline-block;
-      padding-left: 100%;
-      animation: deslizar 30s linear infinite;
-    }
-    .premio {
-      display: inline-block;
-      margin-right: 50px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #00ccff;
-      text-shadow: 0 0 5px #000;
-    }
-    @keyframes deslizar {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-    .mensaje-extra {
-      margin-top: 25px;
-      font-size: 18px;
-      color: #00ccff;
-      text-shadow: 0 0 5px #000;
-    }
+    .leyenda { margin-top: 15px; color: #ffffffcc; font-size: 16px; }
+    #premios-automaticos { overflow: hidden; white-space: nowrap; margin-top: 25px; height: 35px; position: relative; }
+    .marquesina { display: inline-block; padding-left: 100%; animation: deslizar 30s linear infinite; }
+    .premio { display: inline-block; margin-right: 50px; font-size: 16px; font-weight: bold; color: #00ccff; text-shadow: 0 0 5px #000; }
+    @keyframes deslizar { 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }
+    .mensaje-extra { margin-top: 25px; font-size: 18px; color: #00ccff; text-shadow: 0 0 5px #000; }
     #botonRecargar {
-      margin-top: 30px;
-      padding: 10px 22px;
-      font-size: 16px;
-      background-color: #222;
-      color: #00ccff;
-      border: 2px solid #00ccff;
-      border-radius: 30px;
-      cursor: pointer;
-      display: none;
-      animation: aparecer 0.4s ease;
+      margin-top: 30px; padding: 10px 22px; font-size: 16px; background-color: #222;
+      color: #00ccff; border: 2px solid #00ccff; border-radius: 30px; cursor: pointer;
+      display: none; animation: aparecer 0.4s ease;
     }
-    @keyframes aparecer {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes aparecer { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
   </style>
 </head>
 <body>
@@ -176,7 +99,18 @@
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
   <script>
+    // Control de códigos y bloqueo de intento hasta refrescar
     const usados = JSON.parse(localStorage.getItem('usados') || '{}');
+    let estaProcesando = false; // evita doble click rápido
+    const REFRESH_LOCK_KEY = 'bloqueado_turno';
+
+    // Si ya se hizo un intento en esta sesión/tab, queda bloqueado hasta refrescar
+    function estaBloqueado() {
+      return sessionStorage.getItem(REFRESH_LOCK_KEY) === '1';
+    }
+    function bloquearHastaRefrescar() {
+      sessionStorage.setItem(REFRESH_LOCK_KEY, '1');
+    }
 
     function setFirstUse(codigo) {
       const key = `firstUsed_${codigo}`;
@@ -195,19 +129,42 @@
       return `${fecha} ${hora}`;
     }
 
+    function deshabilitarUI() {
+      document.getElementById("codigo").disabled = true;
+      document.getElementById("botonTirar").disabled = true;
+      document.getElementById("botonRecargar").style.display = "inline-block";
+    }
+
     function tirar() {
       const codigoInput = document.getElementById("codigo");
       const boton = document.getElementById("botonTirar");
       const resultado = document.getElementById("resultado");
-      const botonRecargar = document.getElementById("botonRecargar");
       const codigoIngresado = codigoInput.value.trim();
+
+      // Bloqueo por refresco: si ya usó el turno, no deja reintentar sin recargar
+      if (estaBloqueado()) {
+        resultado.className = "resultado-aviso";
+        resultado.innerHTML = "🔒 Ya usaste tu intento. <b>Actualizá la página</b> para ingresar otro código.";
+        deshabilitarUI();
+        return;
+      }
+
+      // Anti doble click/latencia
+      if (estaProcesando) return;
+      estaProcesando = true;
 
       if (!codigoIngresado) {
         resultado.className = "resultado-aviso";
         resultado.innerHTML = "⚠️ Ingresá un código.";
+        estaProcesando = false; // no bloqueamos el turno si no ingresó nada
         return;
       }
 
+      // Inmediatamente bloqueamos el turno y la UI (una sola vez por refresco)
+      bloquearHastaRefrescar();
+      deshabilitarUI();
+
+      // Si el código ya fue usado en este dispositivo (tras refrescos), mostrar info e incrementar intentos
       if (usados[codigoIngresado]) {
         let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
         intentos++;
@@ -216,18 +173,13 @@
         const cuando = first ? formatFecha(first) : "desconocido";
 
         resultado.className = "resultado-aviso";
-        if (intentos === 2) {
-          resultado.innerHTML =
-            `🚫 Ya ingresaste este código antes en este dispositivo. (Intento #${intentos})<br>` +
-            `🕒 Primera vez aquí: <b>${cuando}</b>`;
-        } else {
-          resultado.innerHTML =
-            `🚫 Ya pusiste este código ${intentos} veces en este dispositivo.<br>` +
-            `🕒 Primera vez aquí: <b>${cuando}</b>`;
-        }
-        return;
+        resultado.innerHTML =
+          `🚫 Este código ya fue utilizado en este dispositivo (Intento #${intentos}).<br>` +
+          `🕒 Primera vez aquí: <b>${cuando}</b>`;
+        return; // queda bloqueado hasta refrescar
       }
 
+      // Llamada al backend
       fetch('/api/verificar-codigo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -236,13 +188,13 @@
       .then(response => response.json())
       .then(data => {
         if (data.estado === "valido") {
-          const msg = (data.mensaje || "").toLowerCase();
-          if (msg.includes("sin premio")) {
+          const msg = (data.mensaje || "");
+          if (msg.toLowerCase().includes("sin premio")) {
             resultado.className = "resultado-sinpremio";
-            resultado.textContent = "X SIN PREMIO, PROBA EN TU PROXIMA CARGA";
+            resultado.innerHTML = `X SIN PREMIO – Código: <b>${codigoIngresado}</b>. Probá en tu próxima carga.`;
           } else {
             resultado.className = "resultado-exito";
-            resultado.innerHTML = "✅ Código: " + codigoIngresado + " – " + data.mensaje;
+            resultado.innerHTML = `✅ Código: <b>${codigoIngresado}</b> – ${msg}`;
           }
           usados[codigoIngresado] = true;
           localStorage.setItem("usados", JSON.stringify(usados));
@@ -250,6 +202,7 @@
           setFirstUse(codigoIngresado);
 
         } else if (data.estado === "usado") {
+          // Si en backend figura “usado”, informamos y dejamos bloqueado hasta refrescar
           let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "0", 10) + 1;
           localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
           const first = getFirstUse(codigoIngresado);
@@ -259,22 +212,20 @@
           resultado.innerHTML =
             `🚫 Este código ya fue utilizado. (Intento #${intentos} en este dispositivo)<br>` +
             `🕒 Primera vez aquí: <b>${cuando}</b>`;
+
         } else {
           resultado.className = "resultado-error";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
         }
-
-        codigoInput.disabled = true;
-        boton.disabled = true;
-        botonRecargar.style.display = "inline-block";
       })
       .catch(error => {
         console.error("Error al verificar el código:", error);
         resultado.className = "resultado-error";
-        resultado.innerHTML = "❌ Código inválido.";
-        codigoInput.disabled = true;
-        boton.disabled = true;
-        botonRecargar.style.display = "inline-block";
+        resultado.innerHTML = "❌ Error de verificación. Intentá nuevamente.";
+      })
+      .finally(() => {
+        // Mantener bloqueo hasta que refresquen; no reactivamos la UI
+        estaProcesando = false;
       });
     }
   </script>
