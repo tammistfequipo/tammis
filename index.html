@@ -116,6 +116,20 @@
     const LAST_CODE_KEY = 'ultimo_codigo';
     const LAST_CODE_TIME_KEY = 'ultimo_codigo_first';
 
+    // ✅ LIMPIAR BLOQUEO AL RECARGAR
+    window.addEventListener('DOMContentLoaded', () => {
+      sessionStorage.removeItem(REFRESH_LOCK_KEY);
+      sessionStorage.removeItem(LAST_CODE_KEY);
+      sessionStorage.removeItem(LAST_CODE_TIME_KEY);
+      // re-habilitar UI por si quedó deshabilitada
+      document.getElementById("codigo").disabled = false;
+      document.getElementById("botonTirar").disabled = false;
+      document.getElementById("botonRecargar").style.display = "none";
+      const resultado = document.getElementById("resultado");
+      resultado.className = "";
+      resultado.innerHTML = "";
+    });
+
     function estaBloqueado() {
       return sessionStorage.getItem(REFRESH_LOCK_KEY) === '1';
     }
@@ -153,6 +167,7 @@
       const resultado = document.getElementById("resultado");
       const codigoIngresado = codigoInput.value.trim();
 
+      // Si ya usó el turno en esta pestaña, mostrar mensaje con código + fecha/hora
       if (estaBloqueado()) {
         const ultimo = sessionStorage.getItem(LAST_CODE_KEY) || codigoIngresado || '';
         const isoGuardado =
@@ -182,10 +197,12 @@
         return;
       }
 
+      // Bloqueamos turno y guardamos el código para el mensaje de reintento
       bloquearHastaRefrescar();
       sessionStorage.setItem(LAST_CODE_KEY, codigoIngresado);
       deshabilitarUI();
 
+      // Si el código ya fue usado antes en este dispositivo
       if (usados[codigoIngresado]) {
         let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
         intentos++;
@@ -197,9 +214,10 @@
         resultado.innerHTML =
           `🚫 Este código ya fue utilizado en este dispositivo (Intento #${intentos}).<br>` +
           `🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
-        return;
+        return; // bloqueado hasta refrescar
       }
 
+      // Verificación en backend
       fetch('/api/verificar-codigo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
