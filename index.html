@@ -99,12 +99,12 @@
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
   <script>
-    // Control de códigos y bloqueo de intento hasta refrescar
     const usados = JSON.parse(localStorage.getItem('usados') || '{}');
-    let estaProcesando = false; // evita doble click rápido
+    let estaProcesando = false;
     const REFRESH_LOCK_KEY = 'bloqueado_turno';
+    const LAST_CODE_KEY = 'ultimo_codigo';
+    const LAST_CODE_TIME_KEY = 'ultimo_codigo_first';
 
-    // Si ya se hizo un intento en esta sesión/tab, queda bloqueado hasta refrescar
     function estaBloqueado() {
       return sessionStorage.getItem(REFRESH_LOCK_KEY) === '1';
     }
@@ -115,18 +115,20 @@
     function setFirstUse(codigo) {
       const key = `firstUsed_${codigo}`;
       if (!localStorage.getItem(key)) {
-        localStorage.setItem(key, new Date().toISOString());
+        const iso = new Date().toISOString();
+        localStorage.setItem(key, iso);
+        sessionStorage.setItem(LAST_CODE_TIME_KEY, iso);
       }
     }
     function getFirstUse(codigo) {
       return localStorage.getItem(`firstUsed_${codigo}`) || null;
     }
-    function formatFecha(iso) {
+    function splitFecha(iso) {
       const d = new Date(iso);
       const pad = n => String(n).padStart(2, '0');
       const fecha = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
       const hora  = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-      return `${fecha} ${hora}`;
+      return { fecha, hora };
     }
 
     function deshabilitarUI() {
@@ -137,49 +139,57 @@
 
     function tirar() {
       const codigoInput = document.getElementById("codigo");
-      const boton = document.getElementById("botonTirar");
       const resultado = document.getElementById("resultado");
       const codigoIngresado = codigoInput.value.trim();
 
-      // Bloqueo por refresco: si ya usó el turno, no deja reintentar sin recargar
+      // Si ya usó el turno, mostrar mensaje con código + fecha/hora
       if (estaBloqueado()) {
-        resultado.className = "resultado-aviso";
-        resultado.innerHTML = "🔒 Ya usaste tu intento. <b>Actualizá la página</b> para ingresar otro código.";
+        const ultimo = sessionStorage.getItem(LAST_CODE_KEY) || codigoIngresado || '';
+        const isoGuardado =
+          (ultimo && getFirstUse(ultimo)) ||
+          sessionStorage.getItem(LAST_CODE_TIME_KEY);
+
+        if (ultimo && isoGuardado) {
+          const { fecha, hora } = splitFecha(isoGuardado);
+          resultado.className = "resultado-aviso";
+          resultado.innerHTML =
+            `🚫 Ya usaste este código en este dispositivo a las <b>${hora}</b> del <b>${fecha}</b>: <b>${ultimo}</b>`;
+        } else {
+          resultado.className = "resultado-aviso";
+          resultado.innerHTML = "🔒 Ya usaste tu intento. Refrescá la página para ingresar otro.";
+        }
         deshabilitarUI();
         return;
       }
 
-      // Anti doble click/latencia
       if (estaProcesando) return;
       estaProcesando = true;
 
       if (!codigoIngresado) {
         resultado.className = "resultado-aviso";
         resultado.innerHTML = "⚠️ Ingresá un código.";
-        estaProcesando = false; // no bloqueamos el turno si no ingresó nada
+        estaProcesando = false;
         return;
       }
 
-      // Inmediatamente bloqueamos el turno y la UI (una sola vez por refresco)
       bloquearHastaRefrescar();
+      sessionStorage.setItem(LAST_CODE_KEY, codigoIngresado);
       deshabilitarUI();
 
-      // Si el código ya fue usado en este dispositivo (tras refrescos), mostrar info e incrementar intentos
       if (usados[codigoIngresado]) {
         let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
         intentos++;
         localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
         const first = getFirstUse(codigoIngresado);
-        const cuando = first ? formatFecha(first) : "desconocido";
+        const { fecha, hora } = first ? splitFecha(first) : { fecha: "desconocido", hora: "" };
 
         resultado.className = "resultado-aviso";
         resultado.innerHTML =
           `🚫 Este código ya fue utilizado en este dispositivo (Intento #${intentos}).<br>` +
-          `🕒 Primera vez aquí: <b>${cuando}</b>`;
-        return; // queda bloqueado hasta refrescar
+          `🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
+        return;
       }
 
-      // Llamada al backend
       fetch('/api/verificar-codigo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -202,17 +212,15 @@
           setFirstUse(codigoIngresado);
 
         } else if (data.estado === "usado") {
-          // Si en backend figura “usado”, informamos y dejamos bloqueado hasta refrescar
           let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "0", 10) + 1;
           localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
           const first = getFirstUse(codigoIngresado);
-          const cuando = first ? formatFecha(first) : "en otro dispositivo";
+          const { fecha, hora } = first ? splitFecha(first) : { fecha: "en otro dispositivo", hora: "" };
 
           resultado.className = "resultado-aviso";
           resultado.innerHTML =
             `🚫 Este código ya fue utilizado. (Intento #${intentos} en este dispositivo)<br>` +
-            `🕒 Primera vez aquí: <b>${cuando}</b>`;
-
+            `🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
         } else {
           resultado.className = "resultado-error";
           resultado.innerHTML = "❌ Código inválido. Probá con otro.";
@@ -224,7 +232,6 @@
         resultado.innerHTML = "❌ Error de verificación. Intentá nuevamente.";
       })
       .finally(() => {
-        // Mantener bloqueo hasta que refresquen; no reactivamos la UI
         estaProcesando = false;
       });
     }
