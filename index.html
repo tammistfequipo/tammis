@@ -8,186 +8,110 @@
   <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
   <style>
     :root{
-      --neo-cyan:#00ccff;
-      --neo-violet:#9b59b6;
-      --green:#00ff55;
-      --danger:#ff3b3b;
-      --bg-dark:rgba(0,0,0,.55);
+      --neo-cyan:#00ccff; --neo-violet:#9b59b6; --green:#00ff55; --danger:#ff3b3b; --bg-dark:rgba(0,0,0,.55);
     }
     *{box-sizing:border-box}
-    body {
-      background: url("f1ec4f7e-3b11-414c-bb1c-3db302c97c66.jpg") no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Luckiest Guy', cursive, sans-serif;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+    body{
+      background:url("f1ec4f7e-3b11-414c-bb1c-3db302c97c66.jpg") no-repeat center center fixed;
+      background-size:cover; font-family:'Luckiest Guy', cursive, sans-serif; color:#fff; text-align:center; margin:0;
     }
 
-    /* Título con entrada tipo estrella fugaz + latido */
-    h1 {
-      font-family: 'Luckiest Guy', cursive;
-      font-size: clamp(48px, 8vw, 70px);
-      font-weight: 900;
-      letter-spacing: 3px;
-      color: #ff0000;
+    /* Título: entrada “estrella fugaz” + latido */
+    h1{
+      font-size:clamp(48px, 8vw, 70px); font-weight:900; letter-spacing:3px; color:#ff0000; margin:25px 0 0;
       text-shadow:
-        -3px -3px 0 #000,  
-         3px -3px 0 #000,
-        -3px  3px 0 #000,
-         3px  3px 0 #000,
-        -5px -5px 0 #fff,
-         5px -5px 0 #fff,
-        -5px  5px 0 #fff,
-         5px  5px 0 #fff,
-         0 0 12px #ff0000,
-         0 0 24px #ff0000;
-      margin: 25px 0 0;
-      /* Primera animación: zoom/impacto. Segunda: latido infinito (arranca luego de 1.2s) */
-      animation: entradaZoom 1.2s ease-out forwards, latido 1.3s infinite 1.2s;
-      will-change: transform, opacity;
+        -3px -3px 0 #000,  3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000,
+        -5px -5px 0 #fff,  5px -5px 0 #fff, -5px 5px 0 #fff, 5px 5px 0 #fff,
+        0 0 12px #ff0000, 0 0 24px #ff0000;
+      animation:entradaZoom 1.2s ease-out forwards, latido 1.3s infinite 1.2s;
+      will-change:transform,opacity;
     }
-    @keyframes entradaZoom {
-      0%   { transform: scale(0) rotate(-15deg); opacity: 0; filter: blur(2px); }
-      60%  { transform: scale(1.22) rotate(3deg);  opacity: 1;  filter: blur(0); }
-      80%  { transform: scale(0.92) rotate(-2deg); }
-      100% { transform: scale(1) rotate(0deg); }
+    @keyframes entradaZoom{
+      0%{transform:scale(0) rotate(-15deg);opacity:0;filter:blur(2px)}
+      60%{transform:scale(1.22) rotate(3deg);opacity:1;filter:blur(0)}
+      80%{transform:scale(.92) rotate(-2deg)}
+      100%{transform:scale(1) rotate(0)}
     }
-    @keyframes latido { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+    @keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
-    /* === CONTENEDOR GLASS + BORDE NEÓN === */
-    #contenedor {
-      margin: clamp(90px,18vh,180px) auto 40px;
-      width: min(92%, 460px);
-      padding: 34px 24px;
-      border-radius: 26px;
-      background: var(--bg-dark);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 2px solid rgba(0, 255, 255, 0.65);
-      box-shadow:
-        0 0 22px rgba(0, 255, 255, 0.35),
-        inset 0 0 18px rgba(255,255,255,0.06);
-      position: relative;
-      overflow: hidden;
+    /* Contenedor glass + borde neón */
+    #contenedor{
+      margin:clamp(90px,18vh,180px) auto 40px; width:min(92%,460px); padding:34px 24px; border-radius:26px;
+      background:var(--bg-dark); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+      border:2px solid rgba(0,255,255,.65);
+      box-shadow:0 0 22px rgba(0,255,255,.35), inset 0 0 18px rgba(255,255,255,.06);
+      position:relative; overflow:hidden;
     }
     #contenedor::after{
-      content:"";
-      position:absolute; inset:-2px;
-      border-radius: 26px;
-      background: conic-gradient(from 0deg, var(--neo-cyan), transparent 35%, var(--neo-violet), transparent 70%, var(--neo-cyan));
-      filter: blur(18px);
-      opacity:.18;
-      animation: halo 6s linear infinite;
-      z-index:0;
-      pointer-events:none;
+      content:""; position:absolute; inset:-2px; border-radius:26px;
+      background:conic-gradient(from 0deg, var(--neo-cyan), transparent 35%, var(--neo-violet), transparent 70%, var(--neo-cyan));
+      filter:blur(18px); opacity:.18; animation:halo 6s linear infinite; z-index:0; pointer-events:none;
     }
-    @keyframes halo { to{ transform: rotate(360deg);} }
+    @keyframes halo{to{transform:rotate(360deg)}}
 
-    /* === INPUT REACTIVO === */
-    .campo { position: relative; z-index:1; }
-    input[type="text"] {
-      padding: 12px 14px;
-      width: 86%;
-      font-size: 18px;
-      border: 2px solid var(--neo-cyan);
-      border-radius: 14px;
-      outline: none;
-      text-align: center;
-      background: rgba(0,0,0,0.72);
-      color: #fff;
-      box-shadow: inset 0 0 6px var(--neo-cyan);
-      transition: border-color .2s, box-shadow .2s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    /* Input + botón */
+    .campo{position:relative; z-index:1}
+    input[type="text"]{
+      padding:12px 14px; width:86%; font-size:18px; border:2px solid var(--neo-cyan); border-radius:14px; outline:none;
+      text-align:center; background:rgba(0,0,0,.72); color:#fff; box-shadow:inset 0 0 6px var(--neo-cyan);
+      transition:border-color .2s, box-shadow .2s; text-transform:uppercase; letter-spacing:1px;
     }
-    input[type="text"]:focus {
-      border-color: #fff;
-      box-shadow: inset 0 0 10px var(--neo-cyan), 0 0 8px rgba(255,255,255,.2);
+    input[type="text"]:focus{border-color:#fff; box-shadow:inset 0 0 10px var(--neo-cyan), 0 0 8px rgba(255,255,255,.2)}
+    input.error{border-color:var(--danger); box-shadow:inset 0 0 8px var(--danger)}
+    button{
+      margin-top:22px; padding:16px 42px; font-size:20px; font-weight:bold;
+      background:linear-gradient(135deg, var(--neo-cyan), var(--neo-violet));
+      border:none; color:#fff; border-radius:50px; cursor:pointer;
+      box-shadow:0 0 15px var(--neo-cyan), 0 0 25px var(--neo-violet);
+      transition:transform .22s, box-shadow .22s, filter .22s; position:relative; z-index:1;
     }
-    input.error { border-color: var(--danger); box-shadow: inset 0 0 8px var(--danger); }
+    button:hover{transform:scale(1.07); box-shadow:0 0 25px var(--neo-cyan), 0 0 40px var(--neo-violet)}
+    button:disabled{cursor:not-allowed; filter:grayscale(.5) brightness(.85); box-shadow:none}
 
-    /* === BOTÓN PREMIUM === */
-    button {
-      margin-top: 22px;
-      padding: 16px 42px;
-      font-size: 20px;
-      font-weight: bold;
-      background: linear-gradient(135deg, var(--neo-cyan), var(--neo-violet));
-      border: none;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 0 15px var(--neo-cyan), 0 0 25px var(--neo-violet);
-      transition: transform .22s ease, box-shadow .22s ease, filter .22s;
-      position: relative;
-      z-index:1;
+    /* Resultados */
+    #resultado{margin-top:18px; font-size:20px; min-height:28px}
+    .resultado-exito,.resultado-aviso,.resultado-error{
+      color:var(--green); font-weight:bold; text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
-    button:hover { transform: scale(1.07); box-shadow: 0 0 25px var(--neo-cyan), 0 0 40px var(--neo-violet); }
-    button:disabled{ cursor:not-allowed; filter: grayscale(.5) brightness(.85); box-shadow:none; }
-
-    /* === RESULTADOS === */
-    #resultado { margin-top: 18px; font-size: 20px; min-height: 28px; }
-    .resultado-exito,.resultado-aviso,.resultado-error {
-      color: var(--green); font-weight: bold;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    .resultado-sinpremio{
+      color:var(--danger); font-weight:bold; text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
-    .resultado-sinpremio {
-      color: var(--danger); font-weight: bold;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    .mensaje-felicitaciones{
+      font-size:24px; color:var(--green);
+      text-shadow:0 0 5px #000, 0 0 15px var(--green), 0 0 25px var(--green);
+      margin-bottom:10px; animation:brillo 1.2s infinite alternate;
     }
-    .mensaje-felicitaciones {
-      font-size: 24px; color: var(--green);
-      text-shadow: 0 0 5px #000, 0 0 15px var(--green), 0 0 25px var(--green);
-      margin-bottom: 10px; animation: brillo 1.2s infinite alternate;
+    @keyframes brillo{from{text-shadow:0 0 5px #000,0 0 10px var(--green),0 0 15px var(--green)}
+                      to{text-shadow:0 0 10px #000,0 0 20px var(--green),0 0 40px var(--green)}}
+
+    .leyenda{margin-top:14px; color:#ffffffcc; font-size:16px}
+
+    /* Marquesina */
+    #premios-automaticos{overflow:hidden; white-space:nowrap; margin-top:22px; height:35px; position:relative}
+    .marquesina{display:inline-block; padding-left:100%; animation:deslizar 30s linear infinite}
+    .marquesina:hover{animation-play-state:paused}
+    .premio{display:inline-block; margin-right:50px; font-size:16px; font-weight:bold; color:var(--neo-cyan); text-shadow:0 0 5px #000}
+    @keyframes deslizar{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+    .mensaje-extra{margin-top:22px; font-size:18px; color:var(--neo-cyan); text-shadow:0 0 5px #000}
+
+    #botonRecargar{
+      margin-top:28px; padding:12px 26px; font-size:16px; background:#222; color:var(--neo-cyan);
+      border:2px solid var(--neo-cyan); border-radius:30px; cursor:pointer; display:none; animation:aparecer .4s ease;
     }
-    @keyframes brillo {
-      from { text-shadow: 0 0 5px #000, 0 0 10px var(--green), 0 0 15px var(--green); }
-      to   { text-shadow: 0 0 10px #000, 0 0 20px var(--green), 0 0 40px var(--green); }
-    }
+    @keyframes aparecer{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)}}
 
-    .leyenda { margin-top: 14px; color: #ffffffcc; font-size: 16px; }
+    /* Toasts + Confetti */
+    .toasts{position:fixed; top:14px; right:14px; display:flex; flex-direction:column; gap:10px; z-index:9999}
+    .toast{background:rgba(0,0,0,.8); border:1px solid rgba(255,255,255,.2); padding:10px 14px; border-radius:10px; color:#fff; font-size:14px;
+           box-shadow:0 4px 14px rgba(0,0,0,.5); animation:toastIn .22s ease}
+    .toast.ok{border-color:var(--green)} .toast.err{border-color:var(--danger)} .toast.info{border-color:var(--neo-cyan)}
+    @keyframes toastIn{from{opacity:0; transform:translateY(-8px)} to{opacity:1; transform:translateY(0)}}
+    #confetti-layer{position:fixed; inset:0; pointer-events:none; z-index:9998; overflow:hidden}
+    .confetto{position:absolute; width:8px; height:14px; opacity:.9; will-change:transform,opacity; border-radius:2px}
+    #resultado[role="status"]{outline:none}
 
-    /* MARQUESINA */
-    #premios-automaticos { overflow: hidden; white-space: nowrap; margin-top: 22px; height: 35px; position: relative; }
-    .marquesina { display: inline-block; padding-left: 100%; animation: deslizar 30s linear infinite; }
-    .marquesina:hover { animation-play-state: paused; }
-    .premio { display: inline-block; margin-right: 50px; font-size: 16px; font-weight: bold; color: var(--neo-cyan); text-shadow: 0 0 5px #000; }
-    @keyframes deslizar { 0%{transform:translateX(0)} 100%{transform:translateX(-100%)} }
-
-    .mensaje-extra { margin-top: 22px; font-size: 18px; color: var(--neo-cyan); text-shadow: 0 0 5px #000; }
-
-    #botonRecargar {
-      margin-top: 28px; padding: 12px 26px; font-size: 16px; background-color: #222;
-      color: var(--neo-cyan); border: 2px solid var(--neo-cyan); border-radius: 30px; cursor: pointer;
-      display: none; animation: aparecer 0.4s ease;
-    }
-    @keyframes aparecer { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-    /* TOASTS */
-    .toasts { position: fixed; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
-    .toast {
-      background: rgba(0,0,0,.8);
-      border: 1px solid rgba(255,255,255,.2);
-      padding: 10px 14px; border-radius: 10px; color:#fff; font-size: 14px;
-      box-shadow: 0 4px 14px rgba(0,0,0,.5);
-      animation: toastIn .22s ease;
-    }
-    .toast.ok{ border-color: var(--green); }
-    .toast.err{ border-color: var(--danger); }
-    .toast.info{ border-color: var(--neo-cyan); }
-    @keyframes toastIn{ from{opacity:0; transform: translateY(-8px)} to{opacity:1; transform: translateY(0)} }
-
-    /* CONFETTI */
-    #confetti-layer{ position: fixed; inset:0; pointer-events:none; z-index: 9998; overflow: hidden; }
-    .confetto{ position:absolute; width:8px; height:14px; opacity:0.9; will-change: transform, opacity; border-radius:2px; }
-
-    #resultado[role="status"]{ outline:none; }
-
-    @media (max-width: 420px){
-      .premio{ margin-right: 30px; font-size: 14px;}
-    }
+    @media (max-width:420px){ .premio{margin-right:30px; font-size:14px} }
   </style>
 </head>
 <body>
@@ -227,13 +151,176 @@
 
   <div class="mensaje-extra">🎁 ¿TU CÓDIGO TIENE PREMIO? ¡SACÁ CAPTURA Y ENVIÁLA YA! 💬</div>
 
-  <!-- capas de feedback -->
+  <!-- Capas de feedback -->
   <div id="confetti-layer" aria-hidden="true"></div>
   <div class="toasts" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    /* Tu JS de verificación permanece idéntico al que ya tenés funcionando
-       (bloqueo por refresco, toasts, confetti, etc.). */
+    /* ======= Estado y utilidades ======= */
+    const usados = JSON.parse(localStorage.getItem('usados') || '{}');
+    let estaProcesando = false, cooldown = false;
+    const REFRESH_LOCK_KEY = 'bloqueado_turno';
+    const LAST_CODE_KEY = 'ultimo_codigo';
+    const LAST_CODE_TIME_KEY = 'ultimo_codigo_first';
+
+    const $ = s => document.querySelector(s);
+    const input = $("#codigo"), btn = $("#botonTirar"), resultado = $("#resultado"),
+          btnRecargar = $("#botonRecargar"), toasts = document.querySelector(".toasts"),
+          confettiLayer = document.getElementById("confetti-layer");
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Limpio bloqueo al recargar para permitir nuevo código
+      sessionStorage.removeItem(REFRESH_LOCK_KEY);
+      sessionStorage.removeItem(LAST_CODE_KEY);
+      sessionStorage.removeItem(LAST_CODE_TIME_KEY);
+      input.disabled = false; btn.disabled = false; btnRecargar.style.display = "none";
+      resultado.className = ""; resultado.innerHTML = "";
+      btn.disabled = input.value.trim().length === 0;
+    });
+
+    function toast(msg, type="info", ms=1800){
+      const t = document.createElement("div"); t.className = "toast " + type; t.textContent = msg;
+      toasts.appendChild(t); setTimeout(()=>t.remove(), ms);
+    }
+    function bloquearHastaRefrescar(){ sessionStorage.setItem(REFRESH_LOCK_KEY,'1'); }
+    function estaBloqueado(){ return sessionStorage.getItem(REFRESH_LOCK_KEY)==='1'; }
+    function setFirstUse(codigo){
+      const key = `firstUsed_${codigo}`;
+      if(!localStorage.getItem(key)){
+        const iso = new Date().toISOString();
+        localStorage.setItem(key, iso);
+        sessionStorage.setItem(LAST_CODE_TIME_KEY, iso);
+      }
+    }
+    function getFirstUse(codigo){ return localStorage.getItem(`firstUsed_${codigo}`) || null; }
+    function splitFecha(iso){
+      const d = new Date(iso), pad = n=>String(n).padStart(2,'0');
+      return { fecha:`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`, hora:`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}` };
+    }
+    function deshabilitarUI(){ input.disabled = true; btn.disabled = true; btnRecargar.style.display = "inline-block"; }
+    function iniciarCooldown(ms=1200){ cooldown = true; setTimeout(()=>cooldown=false, ms); }
+
+    // Input UX
+    input.addEventListener("input",(e)=>{
+      let v = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,""); e.target.value = v;
+      if(!v) input.classList.add("error"); else input.classList.remove("error");
+      btn.disabled = v.length === 0;
+    });
+    input.addEventListener("focus", ()=> input.select());
+    input.addEventListener("keydown",(e)=>{ if(e.key==="Enter" && !btn.disabled) tirar(); });
+
+    // Confetti
+    function confetti(){
+      for(let i=0;i<80;i++){
+        const c = document.createElement('div');
+        c.className='confetto';
+        c.style.left = Math.random()*100 + 'vw';
+        c.style.top = '-10px';
+        c.style.background = `hsl(${Math.random()*360}, 90%, 60%)`;
+        const rot = (Math.random()*360)|0, dur = 2000 + Math.random()*1500, dx = (Math.random()*2-1)*100;
+        c.animate([
+          { transform:`translate(0,0) rotate(${rot}deg)`, opacity:1 },
+          { transform:`translate(${dx}px, 100vh) rotate(${rot+360}deg)`, opacity:0.9 }
+        ], { duration:dur, easing:'ease-out', fill:'forwards' });
+        confettiLayer.appendChild(c); setTimeout(()=>c.remove(), dur+100);
+      }
+      const cont = document.getElementById('contenedor');
+      cont.animate([
+        { boxShadow:'0 0 22px rgba(0,255,255,.35), inset 0 0 18px rgba(255,255,255,.06)' },
+        { boxShadow:'0 0 32px rgba(0,255,120,.7), inset 0 0 18px rgba(255,255,255,.08)' }
+      ], { duration:500, direction:'alternate', iterations:2 });
+    }
+
+    /* ======= Lógica principal ======= */
+    function tirar(){
+      const codigoIngresado = input.value.trim();
+
+      if(estaBloqueado()){
+        const ultimo = sessionStorage.getItem(LAST_CODE_KEY) || codigoIngresado || '';
+        const isoGuardado = (ultimo && getFirstUse(ultimo)) || sessionStorage.getItem(LAST_CODE_TIME_KEY);
+        if(ultimo && isoGuardado){
+          const {fecha, hora} = splitFecha(isoGuardado);
+          resultado.className = "resultado-aviso";
+          resultado.innerHTML = `🚫 Ya usaste este código en este dispositivo a las <b>${hora}</b> del <b>${fecha}</b>: <b>${ultimo}</b>`;
+        }else{
+          resultado.className = "resultado-aviso";
+          resultado.innerHTML = "🔒 Ya usaste tu intento. Refrescá la página para ingresar otro.";
+        }
+        deshabilitarUI();
+        return;
+      }
+
+      if(estaProcesando || cooldown) return;
+      estaProcesando = true; iniciarCooldown();
+
+      if(!codigoIngresado){
+        input.classList.add("error"); toast("Ingresá un código", "err"); estaProcesando = false; return;
+      }
+
+      toast("Verificando…","info",900);
+
+      // Bloqueo del turno y persistencia
+      bloquearHastaRefrescar();
+      sessionStorage.setItem(LAST_CODE_KEY, codigoIngresado);
+      deshabilitarUI();
+
+      // Si ya fue usado en este dispositivo
+      if(usados[codigoIngresado]){
+        let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "1", 10);
+        intentos++; localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
+        const first = getFirstUse(codigoIngresado);
+        const {fecha, hora} = first ? splitFecha(first) : {fecha:"desconocido", hora:""};
+        resultado.className = "resultado-aviso";
+        resultado.innerHTML = `🚫 Este código ya fue utilizado en este dispositivo (Intento #${intentos}).<br>🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
+        estaProcesando = false; return;
+      }
+
+      // Llamada al backend
+      fetch('/api/verificar-codigo', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({ codigo: codigoIngresado })
+      })
+      .then(async (res)=>{ if(!res.ok) throw new Error(`HTTP ${res.status}`); const txt = await res.text(); try{return JSON.parse(txt)}catch{throw new Error("Respuesta inválida del servidor")} })
+      .then(data=>{
+        if(data.estado === "valido"){
+          const msg = (data.mensaje || "");
+          if(msg.toLowerCase().includes("sin premio")){
+            resultado.className = "resultado-sinpremio";
+            resultado.innerHTML = `X SIN PREMIO – Código: <b>${codigoIngresado}</b>. Probá en tu próxima carga.`;
+            toast("Sin premio esta vez","info");
+          }else{
+            resultado.className = "resultado-exito";
+            resultado.innerHTML = `<div class="mensaje-felicitaciones">🎉 FELICITACIONES 🎉</div>✅ Código: <b>${codigoIngresado}</b> – ${msg}`;
+            confetti(); toast("¡Premio acreditado!","ok");
+          }
+          usados[codigoIngresado] = true;
+          localStorage.setItem("usados", JSON.stringify(usados));
+          localStorage.setItem(`intentos_${codigoIngresado}`, 1);
+          setFirstUse(codigoIngresado);
+
+        }else if(data.estado === "usado"){
+          let intentos = parseInt(localStorage.getItem(`intentos_${codigoIngresado}`) || "0", 10) + 1;
+          localStorage.setItem(`intentos_${codigoIngresado}`, intentos);
+          const first = getFirstUse(codigoIngresado);
+          const {fecha, hora} = first ? splitFecha(first) : {fecha:"en otro dispositivo", hora:""};
+          resultado.className = "resultado-aviso";
+          resultado.innerHTML = `🚫 Este código ya fue utilizado. (Intento #${intentos} en este dispositivo)<br>🕒 Primera vez aquí: <b>${hora ? `${hora} del ${fecha}` : fecha}</b>`;
+          toast("Código ya utilizado","err");
+
+        }else{
+          resultado.className = "resultado-error";
+          resultado.innerHTML = "❌ Código inválido. Probá con otro.";
+          toast("Código inválido","err");
+        }
+      })
+      .catch(err=>{
+        console.error("Error al verificar el código:", err);
+        resultado.className = "resultado-error";
+        resultado.innerHTML = "❌ Error de verificación. Intentá nuevamente.";
+        toast("Error de red o servidor","err");
+      })
+      .finally(()=>{ estaProcesando = false; });
+    }
   </script>
 </body>
 </html>
